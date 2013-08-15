@@ -1,3 +1,4 @@
+#-*- coding:utf-8 -*-
 ##############################################################################
 #
 #    Copyright (C) 2013 Michael Telahun Makonnen <mmakonnen@gmail.com>.
@@ -18,5 +19,29 @@
 #
 ##############################################################################
 
-from . import models
-from . import tests
+{
+    'name': 'Employee Seniority',
+    'version': '1.0',
+    'category': 'Generic Modules/Human Resources',
+    'description': """
+Keep Track of Length of Employment
+==================================
+    """,
+    'author':'Michael Telahun Makonnen <mmakonnen@gmail.com>',
+    'website':'http://miketelahun.wordpress.com',
+    'depends': [
+        'hr',
+        'hr_security',
+    ],
+    'init_xml': [
+    ],
+    'update_xml': [
+        'hr_view.xml',
+    ],
+    'test': [
+    ],
+    'demo_xml': [
+    ],
+    'installable': True,
+    'active': False,
+}

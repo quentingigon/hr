@@ -38,6 +38,7 @@ at a fixed frequency.
     'depends': [
         'hr_accrual',
         'hr_contract_state',
+        'hr_employee_seniority',
         'hr_policy_group',
     ],
     'init_xml': [
