@@ -6,7 +6,7 @@
 from . import models
 =======
 #-*- coding:utf-8 -*-
-##############################################################################
+#
 #
 #    Copyright (C) 2011,2013 Michael Telahun Makonnen <mmakonnen@gmail.com>.
 #    All Rights Reserved.
@@ -24,7 +24,11 @@ from . import models
 #    You should have received a copy of the GNU Affero General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
-##############################################################################
+#
 
+<<<<<<< HEAD
 import hr_employee_id
 >>>>>>> Employee and Contract Management, Attendance and Scheduling, Payroll Management modules
+=======
+from . import hr_employee_id
+>>>>>>> [FIX] PEP8
