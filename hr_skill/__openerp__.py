@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 #
 #    OpenERP, Open Source Management Solution
 #    This module copyright (C) 2013 Savoir-faire Linux
@@ -16,6 +17,24 @@
 #    You should have received a copy of the GNU Affero General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
+{
+    "name": "Skill Management",
+    "version": "0.1",
+    "category": "Human Resources",
+    "license": "AGPL-3",
+    "description": """
+    This module allows you to manage your company and employees skills.
+    """,
+    "author": "Savoir-faire Linux",
+    "website": "http://www.savoirfairelinux.com",
+    "depends": ["hr"],
+    'data': ["security/ir.model.access.csv",
+             "hr_skill_view.xml",
+             ],
+    "demo": [],
+    "test": [],
+    "installable": True,
+    "auto_install": False,
+    "images": [],
+}
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
-
-from . import models
