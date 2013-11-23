@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
 # * hr_skill
@@ -168,12 +167,10 @@ msgstr "Nota"
 
 #. module: hr_skill
 #: field:hr_skill.skill,child_ids:0
->>>>>>> [ADD] adds hr-skill module
 msgid "Children"
 msgstr "Hijo"
 
 #. module: hr_skill
-<<<<<<< HEAD
 #: model:ir.model.fields,field_description:hr_skill.field_hr_skill_color
 msgid "Color Index"
 msgstr ""
@@ -705,12 +702,10 @@ msgstr "Nombre"
 #: field:hr_skill.profile,skill_ids:0
 #: view:hr_skill.skill:0
 #: model:ir.ui.menu,name:hr_skill.menu_open_view_skill_form
->>>>>>> [ADD] adds hr-skill module
 msgid "Skills"
 msgstr "Habilidades"
 
 #. module: hr_skill
-<<<<<<< HEAD
 #: model:ir.actions.act_window,help:hr_skill.action_hr_employee_skill_report
 msgid "Skills Reports."
 msgstr "Informes de Habilidades"
@@ -793,4 +788,3 @@ msgstr "Habilidad"
 #: field:hr.employee,lang_id:0
 msgid "Languages Known"
 msgstr "Idiomas conocidos"
->>>>>>> [ADD] adds hr-skill module
