@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
 # * hr_skill
@@ -132,12 +131,10 @@ msgstr "Compétences"
 
 #. module: hr_skill
 #: model:ir.actions.act_window,name:hr_skill.hr_employee_normal_action_tree
->>>>>>> [ADD] adds hr-skill module
 msgid "Employees"
 msgstr "Employés"
 
 #. module: hr_skill
-<<<<<<< HEAD
 #: selection:hr.employee.skill,level:0
 msgid "Expert"
 msgstr ""
@@ -243,12 +240,10 @@ msgstr "Active"
 #: view:hr.skill:0
 #: field:hr.skill,view:0
 #: selection:hr.skill,view:0
->>>>>>> [ADD] adds hr-skill module
 msgid "Skill"
 msgstr "Compétence"
 
 #. module: hr_skill
-<<<<<<< HEAD
 #: model:ir.actions.act_window,name:hr_skill.open_view_skill_form
 #: model:ir.ui.menu,name:hr_skill.menu_open_view_skill_form
 #: model:ir.ui.view,arch_db:hr_skill.view_employee_skill_form
@@ -289,4 +284,3 @@ msgstr "Enfant"
 msgid "View"
 msgstr "Vue"
 
->>>>>>> [ADD] adds hr-skill module
