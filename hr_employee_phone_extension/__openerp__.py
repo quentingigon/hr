@@ -20,4 +20,37 @@
 #
 ##############################################################################
 
-from . import models
+{
+    'name': 'Employee Phone Extension',
+    'version': '1.0',
+    'category': 'Human Resources',
+    'description': """
+
+Employee Phone Extension
+========================
+This module adds the following to employees :
+* internal_number
+* short_number
+* expiration_date
+
+
+Contributors
+------------
+* Sandy Carter (sandy.carter@savoirfairelinux.com)
+* El Hadji Dem (elhadji.dem@savoirfairelinux.com)
+    """,
+    'author': 'Savoir-faire Linux',
+    'website': 'http://www.savoirfairelinux.com',
+    'license': 'AGPL-3',
+    'depends': ['hr', ],
+    'data': [
+        'hr_view.xml',
+    ],
+    'demo': [],
+    'test': [],
+    'installable': True,
+    'auto_install': False,
+    'images': [],
+}
+
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

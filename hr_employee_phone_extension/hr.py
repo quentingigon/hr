@@ -20,4 +20,19 @@
 #
 ##############################################################################
 
-from . import models
+from openerp.osv import fields, orm
+
+
+class hr_employee(orm.Model):
+    _inherit = 'hr.employee'
+
+    _columns = {
+        'internal_number': fields.char('Internal Number', size=20,
+                                       help='Internal phone number.'),
+        'short_number': fields.char('Short Number', size=20,
+                                    help='Short phone number.'),
+        'expiration_date': fields.date('Expiration Date',
+                                       help='Expiration date of phone numbers.'),
+    }
+
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
