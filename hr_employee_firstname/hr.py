@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 ##############################################################################
 #
 #    OpenERP, Open Source Management Solution
@@ -19,5 +20,23 @@
 #
 ##############################################################################
 
-from . import models
-from .init_hook import post_init_hook
+from openerp.osv import orm, fields
+
+
+class hr_employee(orm.Model):
+    _inherit = 'hr.employee'
+
+    def init(self, cursor):
+        cursor.execute('SELECT id FROM hr_employee WHERE lastname IS NOT NULL Limit 1')
+        if not cursor.fetchone():
+            cursor.execute('UPDATE hr_employee set lastname = name_related WHERE name_related IS NOT NULL')
+    _columns = {
+        'firstname': fields.char("Firstname"),
+        'lastname': fields.char("Lastname", required=True)}
+
+    def create(self, cursor, uid, vals, context=None):
+        names = (vals['firstname'], vals['lastname'])
+        vals['name'] = " ".join([s for s in names if s])
+        return super(hr_employee, self).create(cursor, uid, vals, context=context)
+
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

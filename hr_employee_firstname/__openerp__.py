@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 ##############################################################################
 #
 #    OpenERP, Open Source Management Solution
@@ -19,5 +20,35 @@
 #
 ##############################################################################
 
-from . import models
-from .init_hook import post_init_hook
+{
+    'name': 'Employee First Name, Last Name',
+    'version': '0.1',
+    'author': 'Savoir-faire Linux',
+    'maintainer': 'Savoir-faire Linux',
+    'website': 'http://www.savoirfairelinux.com',
+    'category': 'MISC',
+    'description': """
+Employee First Name, Last Name
+==============================
+
+This module allows you to add firstname and lastname in employee form,
+and concatenate both in name field.
+
+Contributors
+------------
+* EL HADJI DEM (elhadji.dem@savoirfairelinux.com)
+""",
+    'depends': [
+        'hr',
+    ],
+    'external_dependencies': {},
+    'data': [
+        'hr_view.xml',
+    ],
+    'demo': [],
+    'test': [],
+    'installable': True,
+    'active': False,
+}
+
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
