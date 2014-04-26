@@ -42,16 +42,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: openobject-addons\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
-"POT-Creation-Date: 2009-11-25 13:17+0000\n"
-"PO-Revision-Date: 2013-09-22 05:54+0000\n"
-"Last-Translator: Maxime Chambreuil (http://www.savoirfairelinux.com) "
-"<maxime.chambreuil@savoirfairelinux.com>\n"
+"POT-Creation-Date: 2013-11-14 22:11+0000\n"
+"PO-Revision-Date: 2014-04-25 14:43+0000\n"
+"Last-Translator: Pedro Manuel Baeza <pedro.baeza@gmail.com>\n"
 "Language-Team: Spanish <es@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2013-09-23 05:37+0000\n"
-"X-Generator: Launchpad (build 16771)\n"
+"X-Launchpad-Export-Date: 2014-04-26 07:14+0000\n"
+"X-Generator: Launchpad (build 16985)\n"
 
 #. module: hr_skill
 #: field:hr_skill.skill,weight_category_id:0
@@ -307,6 +306,12 @@ msgstr "Habilidad"
 #: model:ir.ui.view,arch_db:hr_skill.view_hr_skill_tree
 =======
 #: view:hr.employee:0
+#: field:hr.employee,skill_ids:0
+#: view:hr.skill:0
+#: model:ir.ui.menu,name:hr_skill.menu_hr_skill_mgt
+#: model:ir.ui.menu,name:hr_skill.menu_open_view_skill_form
+msgid "Skills"
+msgstr "Habilidades"
 msgid "Pay Grade"
 msgstr "Rango de pago"
 
@@ -485,6 +490,9 @@ msgstr "Valor numérico"
 #: model:ir.model,name:hr_skill.model_hr_skill_experience
 msgid "hr_skill.experience"
 msgstr ""
+#: model:ir.model,name:hr_skill.model_hr_employee
+msgid "Employee"
+msgstr "Empleado"
 
 #. module: hr_skill
 #: model:ir.model,name:hr_skill.model_emp_lang
@@ -515,6 +523,9 @@ msgstr "Estatus"
 #: model:ir.model,name:hr_skill.model_hr_skill_position
 msgid "hr_skill.position"
 msgstr ""
+#: field:hr.skill,employee_ids:0
+msgid "Employee(s)"
+msgstr "Empleado(s)"
 
 #. module: hr_skill
 #: model:ir.actions.wizard,name:hr_skill.wizard_employee_date_check
