@@ -1,9 +1,4 @@
-<<<<<<< HEAD
-##############################################################################
-=======
-#-*- coding:utf-8 -*-
-#
->>>>>>> [FIX] PEP8
+
 #
 #    Copyright (C) 2013 Michael Telahun Makonnen <mmakonnen@gmail.com>.
 #    All Rights Reserved.
@@ -23,9 +18,5 @@
 #
 #
 
-<<<<<<< HEAD
 from . import models
 from . import tests
-=======
-from . import hr
->>>>>>> [FIX] PEP8

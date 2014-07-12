@@ -1,12 +1,3 @@
-<<<<<<< HEAD
-# Copyright (C) 2011,2013 Michael Telahun Makonnen <mmakonnen@gmail.com>.
-# License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
-
-from . import models
-=======
-#-*- coding:utf-8 -*-
-#
-#
 #    Copyright (C) 2011 Michael Telahun Makonnen <mmakonnen@gmail.com>.
 #    All Rights Reserved.
 #
@@ -24,10 +15,4 @@ from . import models
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 #
-
-<<<<<<< HEAD
-import hr
->>>>>>> Employee and Contract Management, Attendance and Scheduling, Payroll Management modules
-=======
-from . import hr
->>>>>>> [FIX] PEP8
+from . import models
