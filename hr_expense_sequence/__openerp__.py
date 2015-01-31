@@ -1,14 +1,14 @@
 # -*- encoding: utf-8 -*-
 ##############################################################################
 #
-#    HR Expense Sequence module for OpenERP
-#    Copyright (C) 2014 Akretion (http://www.akretion.com)
-#    @author Alexis de Lattre <alexis.delattre@akretion.com>
+#    OpenERP, Odoo Source Management Solution
+#    Copyright (c) 2014 Serv. Tecnol. Avanzados (http://www.serviciosbaeza.com)
+#                       Pedro M. Baeza <pedro.baeza@serviciosbaeza.com>
 #
 #    This program is free software: you can redistribute it and/or modify
-#    it under the terms of the GNU Affero General Public License as
-#    published by the Free Software Foundation, either version 3 of the
-#    License, or (at your option) any later version.
+#    it under the terms of the GNU Affero General Public License as published
+#    by the Free Software Foundation, either version 3 of the License, or
+#    (at your option) any later version.
 #
 #    This program is distributed in the hope that it will be useful,
 #    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -21,28 +21,19 @@
 ##############################################################################
 
 {
-    'name': 'Sequence on Expenses',
-    'version': '0.1',
-    'category': 'Human Resources',
-    'license': 'AGPL-3',
-    'summary': "Adds a sequence on expenses",
-    'description': """
-Sequence on Expenses
-====================
-
-This module adds a sequence on expenses. This sequence is also used as
-reference in the related account move.
-
-This module has been written by Alexis de Lattre
-<alexis.delattre@akretion.com>.
-    """,
-    'author': 'Akretion',
-    'website': 'http://www.akretion.com',
-    'depends': ['hr_expense'],
-    'data': [
-        'hr_expense_view.xml',
-        'hr_expense_sequence.xml',
+    'name': 'HR expense sequence',
+    'version': '1.0',
+    'category': 'HR',
+    'author': 'Serv. Tecnol. Avanzados - Pedro M. Baeza',
+    'website': 'http://www.serviciosbaeza.com',
+    'depends': [
+        'hr_expense',
     ],
-    'demo': ['hr_expense_demo.xml'],
-    'installable': True,
+    'data': [
+        'data/hr_expense_data.xml',
+        'views/hr_expense_expense_view.xml',
+    ],
+    "installable": True,
+    "post_init_hook": "assign_old_sequences",
 }
+

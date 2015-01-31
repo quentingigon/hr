@@ -19,10 +19,10 @@ msgstr ""
 #: view:hr.expense.expense:hr_expense_sequence.view_expenses_form_sequence
 #: model:ir.model,name:hr_expense_sequence.model_hr_expense_expense
 msgid "Expense"
-msgstr ""
+msgstr "Gasto"
 
 #. module: hr_expense_sequence
 #: field:hr.expense.expense,number:0
 msgid "Number"
-msgstr ""
+msgstr "Número"
 
