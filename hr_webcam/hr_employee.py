@@ -3,7 +3,7 @@ from openerp import models
 from openerp.osv import orm
 
 class hr_employee(models.Model):
-    _name = 'hr.employee'
+    _inherit = 'hr.employee'
 
     def action_take_picture(self, cr, uid, ids, context=None):
         data_pool = self.pool.get('ir.model.data')
