@@ -1,2 +1,7 @@
+# -*- encoding: utf-8 -*-
+##############################################################################
+# For copyright and license notices, see __openerp__.py file in root directory
+##############################################################################
+from . import hr_expense_expense
 from . import hr_expense
 from . import hr_expense_sheet
