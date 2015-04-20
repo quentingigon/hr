@@ -20,7 +20,6 @@
 
 {
     'name': 'Contract Hourly Rate',
-    'category': 'Localization',
     'version': '1.0',
     'license': 'AGPL-3',
     'category': 'Generic Modules/Human Resources',
