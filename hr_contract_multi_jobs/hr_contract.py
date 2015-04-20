@@ -42,12 +42,9 @@ class hr_contract(orm.Model):
                     break
         return res
 
-    _columns = {
-        'contract_job_ids': fields.one2many(
-            'hr.contract.job',
-            'contract_id',
-            'Jobs',
-        ),
+    contract_job_ids = fields.One2many('hr.contract.job',
+                                       'contract_id',
+                                       string='Jobs')
 
         # Modify the job_id field so that it points to the main job
         'job_id': fields.function(
@@ -72,8 +69,11 @@ class hr_contract(orm.Model):
         ),
     }
 
-    def _check_one_main_job(self, cr, uid, ids, context=None):
-        for contract in self.browse(cr, uid, ids, context=context):
+    @api.model
+    @api.depends('contract_job_ids', 'contract_job_ids.is_main_job')
+    @api.constrains('contract_job_ids')
+    def _check_one_main_job(self):
+        for contract in self:
 
             # if the contract as no job assigned, a main job
             # is not required. Otherwise, one main job assigned is
