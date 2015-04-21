@@ -75,7 +75,7 @@ class hr_contract(orm.Model):
     def _check_one_main_job(self):
         for contract in self:
 
-            # if the contract as no job assigned, a main job
+            # if the contract has no job assigned, a main job
             # is not required. Otherwise, one main job assigned is
             # required.
             if contract.contract_job_ids:
