@@ -25,22 +25,17 @@ from openerp.osv import fields, orm
 class hr_contract(orm.Model):
     _inherit = 'hr.contract'
 
-    def _get_main_job_position(
-            self, cr, uid, ids, field_name, args=None, context=None
-    ):
+    @api.one
+    @api.depends('contract_job_ids')
+    def _get_main_job_position(self):
         """
         Get the main job position from the field contract_job_ids which
         contains one and only one record with field is_main_job == True
         """
-        res = {}
-
-        for contract in self.browse(cr, uid, ids, context=context):
-            res[contract.id] = False
-            for contract_job in contract.contract_job_ids:
-                if contract_job.is_main_job:
-                    res[contract.id] = contract_job.job_id.id
-                    break
-        return res
+        main_job = self.contract_job_ids.filtered('is_main_job') or False
+        if main_job:
+            main_job = main_job[0].job_id.id
+        self.job_id = main_job
 
     contract_job_ids = fields.One2many('hr.contract.job',
                                        'contract_id',
@@ -69,22 +64,15 @@ class hr_contract(orm.Model):
         ),
     }
 
-    @api.model
-    @api.depends('contract_job_ids', 'contract_job_ids.is_main_job')
-    @api.constrains('contract_job_ids')
+    @api.multi
+    @api.constrains('contract_job_ids.is_main_job')
     def _check_one_main_job(self):
         for contract in self:
-
             # if the contract has no job assigned, a main job
             # is not required. Otherwise, one main job assigned is
             # required.
             if contract.contract_job_ids:
-
-                main_jobs = [
-                    contract_job
-                    for contract_job in contract.contract_job_ids
-                    if contract_job.is_main_job
-                ]
+                main_jobs = contract.contract_job_ids.filtered('is_main_job')
                 if len(main_jobs) != 1:
                     return False
         return True
