@@ -65,7 +65,7 @@ class hr_contract(orm.Model):
     }
 
     @api.multi
-    @api.constrains('contract_job_ids.is_main_job')
+    @api.constrains('contract_job_ids')
     def _check_one_main_job(self):
         for contract in self:
             # if the contract has no job assigned, a main job
