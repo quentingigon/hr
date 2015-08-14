@@ -33,6 +33,7 @@
     'summary': 'Adds First Name to Employee',
     'depends': [
         'hr',
+        'partner_firstname',
     ],
     'external_dependencies': {},
     'data': [
