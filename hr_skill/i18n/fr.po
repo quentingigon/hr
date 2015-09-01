@@ -237,8 +237,7 @@ msgid "Active"
 msgstr "Active"
 
 #. module: hr_skill
-#: view:hr.skill:0
-#: field:hr.skill,view:0
+#: view:hr.skill:hr_skill.view_skill_form field:hr.skill,view:0
 #: selection:hr.skill,view:0
 msgid "Skill"
 msgstr "Compétence"
@@ -278,6 +277,17 @@ msgstr "hr.skill"
 #: field:hr.skill,child_ids:0
 msgid "Children"
 msgstr "Enfant"
+
+#. module: hr_skill
+#: model:ir.ui.menu,name:hr_skill.menu_hr_skill_mgt
+msgid "Skills Management"
+msgstr ""
+
+#. module: hr_skill
+#: model:ir.actions.act_window,name:hr_skill.open_view_skill_tree
+#: model:ir.ui.menu,name:hr_skill.menu_open_view_skill_tree
+msgid "Skills Structure"
+msgstr ""
 
 #. module: hr_skill
 #: selection:hr.skill,view:0

@@ -1,6 +1,6 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# * hr_expense_sequence
+# * hr_expense_account_period
 # 
 # Translators:
 msgid ""
@@ -17,18 +17,12 @@ msgstr ""
 "Language: fr\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
-#. module: hr_expense_sequence
-#: view:hr.expense.expense:hr_expense_sequence.view_expenses_form_sequence
-#: model:ir.model,name:hr_expense_sequence.model_hr_expense_expense
+#. module: hr_expense_account_period
+#: model:ir.model,name:hr_expense_account_period.model_hr_expense_expense
 msgid "Expense"
 msgstr "Frais"
 
-#. module: hr_expense_sequence
-#: field:hr.expense.expense,number:0
-msgid "Number"
-msgstr ""
-
-#. module: hr_expense_sequence
-#: view:hr.expense.expense:hr_expense_sequence.view_hr_expense_filter_sequence
-msgid "['|', ('name', 'ilike', self), ('number', 'ilike', self)]"
+#. module: hr_expense_account_period
+#: field:hr.expense.expense,period_id:0
+msgid "Force Period"
 msgstr ""
