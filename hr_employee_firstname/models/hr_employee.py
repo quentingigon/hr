@@ -7,6 +7,9 @@ from odoo.exceptions import ValidationError
 
 UPDATE_PARTNER_FIELDS = ['firstname', 'lastname', 'user_id', 'address_home_id']
 
+UPDATE_PARTNER_FIELDS = set(['firstname', 'lastname', 'user_id',
+                             'address_home_id'])
+
 
 class HrEmployee(models.Model):
     _inherit = 'hr.employee'
