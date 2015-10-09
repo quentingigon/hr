@@ -19,8 +19,8 @@
 ##############################################################################
 
 {
-    'name': 'Worked Days Hourly Rates',
-    'version': '1.0',
+    'name': 'HR Contract Multi Jobs',
+    'version': '8.0.1.0.0',
     'license': 'AGPL-3',
     'category': 'Generic Modules/Human Resources',
     'description': """
