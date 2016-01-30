@@ -30,7 +30,7 @@ msgstr ""
 #. module: hr_expense_invoice
 #: model:ir.model,name:hr_expense_invoice.model_hr_expense
 msgid "Expense"
-msgstr "Spesen"
+msgstr "Aufwand"
 
 #. module: hr_expense_invoice
 #: model:ir.model,name:hr_expense_invoice.model_hr_expense_sheet
