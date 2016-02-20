@@ -46,4 +46,4 @@ msgstr "Factura"
 #. module: hr_expense_invoice
 #: view:hr.expense.expense:hr_expense_invoice.view_expenses_form_invoice
 msgid "{'readonly': [('invoice', '!=', False)]}"
-msgstr ""
+msgstr "{'readonly': [('invoice', '!=', False)]}"
