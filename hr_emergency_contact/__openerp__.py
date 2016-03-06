@@ -6,11 +6,8 @@
     'name': 'HR Emergency Contact',
     'version': '1.0',
     'category': 'Generic Modules/Human Resources',
-    'description': """
-Emergency Contact information for Employee
-==========================================
-    """,
-    'author': "Michael Telahun Makonnen <mmakonnen@gmail.com>,Odoo Community Association (OCA)",
+    'author': "Andhitia Rama,Michael Telahun Makonnen,"
+                   "Odoo Community Association (OCA)",
     'website': 'http://www.openerp.com',
     'license': 'AGPL-3',
     'depends': [
