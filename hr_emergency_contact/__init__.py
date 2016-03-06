@@ -19,9 +19,4 @@
 #
 #
 
-<<<<<<< HEAD
-import hr
->>>>>>> Employee and Contract Management, Attendance and Scheduling, Payroll Management modules
-=======
 from . import hr
->>>>>>> [FIX] PEP8
