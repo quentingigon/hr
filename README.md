@@ -34,6 +34,7 @@ addon | version | summary
 [hr_employee_data_from_work_address](hr_employee_data_from_work_address/) | 8.0.1.0.0 | Update user's and partner's data fields from employee record
 [hr_employee_firstname](hr_employee_firstname/) | 8.0.0.0.2 | Adds First Name to Employee
 [hr_employee_gravatar](hr_employee_gravatar/) | 8.0.1.0.0 | Employees Synchronize Gravatar image
+[hr_employee_id](hr_employee_id/) | 8.0.1.0.0 | Employee ID
 [hr_employee_legacy_id](hr_employee_legacy_id/) | 8.0.1.0.0 | Legacy Employee ID
 [hr_employee_phone_extension](hr_employee_phone_extension/) | 8.0.1.0.0 | Employee Phone Extension
 [hr_expense_account_period](hr_expense_account_period/) | 8.0.0.1.0 | Accounting period for HR expenses journal entries
