@@ -53,6 +53,7 @@ addon | version | summary
 [hr_security](hr_security/) | 8.0.1.0.0 | HR Permission Groups
 [hr_skill](hr_skill/) | 8.0.1.1.0 | Skill Management
 [hr_webcam](hr_webcam/) | 8.0.1.0.0 | Capture employee picture with webcam
+[hr_worked_days_from_timesheet](hr_worked_days_from_timesheet/) | 8.0.1.0.0 | Worked Days From Timesheet
 
 Unported addons
 ---------------
