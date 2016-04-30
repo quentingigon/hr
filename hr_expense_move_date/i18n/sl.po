@@ -1,9 +1,9 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# * hr_employee_gravatar
+# * hr_expense_move_date
 # 
 # Translators:
-# Matjaž Mozetič <m.mozetic@matmoz.si>, 2015-2016
+# Matjaž Mozetič <m.mozetic@matmoz.si>, 2016
 msgid ""
 msgstr ""
 "Project-Id-Version: hr (8.0)\n"
@@ -18,12 +18,12 @@ msgstr ""
 "Language: sl\n"
 "Plural-Forms: nplurals=4; plural=(n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || n%100==4 ? 2 : 3);\n"
 
-#. module: hr_employee_gravatar
-#: field:res.users,calendar_last_notif_ack:0
-msgid "Last notification marked as read from base Calendar"
-msgstr "Zadnje obvestilo iz osnovnega koledarja označeno kot prebrano"
+#. module: hr_expense_move_date
+#: model:ir.model,name:hr_expense_move_date.model_hr_expense_expense
+msgid "Expense"
+msgstr "Izdatki"
 
-#. module: hr_employee_gravatar
-#: model:ir.model,name:hr_employee_gravatar.model_res_users
-msgid "Users"
-msgstr "Uporabniki"
+#. module: hr_expense_move_date
+#: field:hr.expense.expense,move_date:0
+msgid "Move Date"
+msgstr "Datum premika"

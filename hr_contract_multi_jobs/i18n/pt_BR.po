@@ -39,12 +39,17 @@ msgid "Created on"
 msgstr "Criado em"
 
 #. module: hr_contract_multi_jobs
+#: field:hr.contract.job,display_name:0
+msgid "Display Name"
+msgstr ""
+
+#. module: hr_contract_multi_jobs
 #: field:hr.contract.job,id:0
 msgid "ID"
 msgstr ""
 
 #. module: hr_contract_multi_jobs
-#: field:hr.contract.job,job_id:0
+#: field:hr.contract.job,job_id:0 field:hr.contract.job,name:0
 msgid "Job"
 msgstr ""
 
@@ -61,6 +66,11 @@ msgstr ""
 #. module: hr_contract_multi_jobs
 #: field:hr.contract,contract_job_ids:0
 msgid "Jobs"
+msgstr ""
+
+#. module: hr_contract_multi_jobs
+#: field:hr.contract.job,__last_update:0
+msgid "Last Modified on"
 msgstr ""
 
 #. module: hr_contract_multi_jobs
