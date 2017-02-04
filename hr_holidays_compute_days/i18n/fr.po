@@ -69,6 +69,8 @@ msgid ""
 "If enabled, the number of days computed will be always for the full days in "
 "the interval"
 msgstr ""
+"Vous ne pouvez pas planifier début sur un jour férié ou un jour de repos de "
+"l'employé"
 
 #. module: hr_holidays_compute_days
 #: model:ir.model,name:hr_holidays_compute_days.model_hr_holidays
