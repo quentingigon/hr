@@ -3,6 +3,7 @@
 
 from odoo import fields, models
 
+
 GENDER_SELECTION = [('male', 'Male'),
                     ('female', 'Female')]
 
