@@ -82,3 +82,14 @@ class HrEmployee(models.Model):
                     "The initial employment date "
                     "cannot be after the first "
                     "contract in the system!"))
+
+    @api.constrains('initial_employment_date', 'contract_ids')
+    def _check_initial_employment_date(self):
+        if self.initial_employment_date and len(self.contract_ids):
+            initial_dt = fields.Date.from_string(self.initial_employment_date)
+            first_contract_dt = fields.Date.from_string(
+                self._first_contract().date_start)
+            if initial_dt > first_contract_dt:
+                raise exceptions.UserError("The initial employment date cannot"
+                                           " be after the first contract in "
+                                           "the system!")
