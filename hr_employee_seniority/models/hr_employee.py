@@ -36,6 +36,16 @@ class HrEmployee(models.Model):
         return 1 if date_to.day == days_in_month or \
                     date_from.day == date_to.day + 1 else 0
 
+    @staticmethod
+    def check_next_days(date_to, date_from):
+        if date_from.day == 1:
+            days_in_month = calendar.monthrange(date_to.year, date_to.month)[1]
+            if date_to.day == days_in_month:
+                return 1
+            elif date_from.day == date_to.day + 1:
+                return 1
+        return 0
+
     @api.depends('contract_ids', 'initial_employment_date')
     def _compute_months_service(self):
         date_now = fields.Date.today()
