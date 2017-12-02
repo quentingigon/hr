@@ -283,7 +283,7 @@ msgstr "Ort"
 #: model:ir.model.fields,field_description:hr_experience.field_hr_curriculum_name
 #: model:ir.model.fields,field_description:hr_experience.field_hr_experience_name
 msgid "Name"
-msgstr "Bezeichnung"
+msgstr "Name"
 
 #. module: hr_experience
 #: model:ir.model.fields,field_description:hr_experience.field_hr_academic_partner_id

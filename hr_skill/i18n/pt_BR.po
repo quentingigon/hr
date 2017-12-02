@@ -23,7 +23,7 @@ msgstr ""
 #. module: hr_skill
 #: model:ir.model.fields,field_description:hr_skill.field_hr_skill_active
 msgid "Active"
-msgstr "Ativo"
+msgstr ""
 
 #. module: hr_skill
 #: model:ir.ui.view,arch_db:hr_skill.view_skill_form
@@ -169,6 +169,7 @@ msgstr "Habilidade"
 
 #. module: hr_skill
 #: model:ir.actions.act_window,name:hr_skill.open_view_skill_form
+#: model:ir.model.fields,field_description:hr_skill.field_hr_employee_skill_ids
 #: model:ir.ui.menu,name:hr_skill.menu_open_view_skill_form
 #: model:ir.ui.view,arch_db:hr_skill.view_employee_skill_form
 #: model:ir.ui.view,arch_db:hr_skill.view_hr_skill_tree
