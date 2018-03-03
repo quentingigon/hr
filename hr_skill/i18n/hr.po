@@ -22,12 +22,12 @@ msgstr ""
 #. module: hr_skill
 #: model:ir.model.fields,field_description:hr_skill.field_hr_skill_active
 msgid "Active"
-msgstr ""
+msgstr "Aktivan"
 
 #. module: hr_skill
 #: model:ir.ui.view,arch_db:hr_skill.view_skill_form
 msgid "Child Skills"
-msgstr ""
+msgstr "Podređene vještine"
 
 #. module: hr_skill
 #: model:ir.model.fields,field_description:hr_skill.field_hr_skill_child_ids
@@ -143,17 +143,17 @@ msgstr "Naziv"
 #. module: hr_skill
 #: model:ir.model.fields,field_description:hr_skill.field_hr_skill_parent_id
 msgid "Parent"
-msgstr ""
+msgstr "Nadređeni"
 
 #. module: hr_skill
 #: model:ir.model.fields,field_description:hr_skill.field_hr_skill_parent_left
 msgid "Parent Left"
-msgstr ""
+msgstr "Parent Left"
 
 #. module: hr_skill
 #: model:ir.model.fields,field_description:hr_skill.field_hr_skill_parent_right
 msgid "Parent Right"
-msgstr ""
+msgstr "Parent Right"
 
 #. module: hr_skill
 #: selection:hr.employee.skill,level:0
@@ -164,7 +164,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:hr_skill.field_hr_employee_skill_skill_id
 #: model:ir.ui.view,arch_db:hr_skill.view_skill_form
 msgid "Skill"
-msgstr ""
+msgstr "Vještina"
 
 #. module: hr_skill
 #: model:ir.actions.act_window,name:hr_skill.open_view_skill_form
@@ -172,7 +172,7 @@ msgstr ""
 #: model:ir.ui.view,arch_db:hr_skill.view_employee_skill_form
 #: model:ir.ui.view,arch_db:hr_skill.view_hr_skill_tree
 msgid "Skills"
-msgstr ""
+msgstr "Vještine"
 
 #. module: hr_skill
 #: model:ir.actions.act_window,help:hr_skill.action_hr_employee_skill_report
@@ -193,4 +193,4 @@ msgstr "Djelatnici"
 #. module: hr_skill
 #: model:ir.model,name:hr_skill.model_hr_skill
 msgid "hr.skill"
-msgstr ""
+msgstr "hr.skill"

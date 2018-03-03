@@ -1,6 +1,6 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# * hr_expense_analytic_distribution
+# * hr_employee_category_parent
 # 
 # Translators:
 # Alexandre Fayolle <alexandre.fayolle@camptocamp.com>, 2018
@@ -18,12 +18,18 @@ msgstr ""
 "Language: fr\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
-#. module: hr_expense_analytic_distribution
-#: model:ir.model.fields,field_description:hr_expense_analytic_distribution.field_hr_expense_analytic_distribution_id
-msgid "Analytic distribution"
-msgstr "Distribution analytique"
+#. module: hr_employee_category_parent
+#: model:ir.model,name:hr_employee_category_parent.model_hr_employee_category
+msgid "Employee Category"
+msgstr "Catégorie d'employé"
 
-#. module: hr_expense_analytic_distribution
-#: model:ir.model,name:hr_expense_analytic_distribution.model_hr_expense
-msgid "Expense"
-msgstr "Note de frais"
+#. module: hr_employee_category_parent
+#: model:ir.model.fields,field_description:hr_employee_category_parent.field_hr_employee_category_parent_id
+msgid "Parent category"
+msgstr "Catégorie Parente"
+
+#. module: hr_employee_category_parent
+#: code:addons/hr_employee_category_parent/models/hr_employee_category.py:39
+#, python-format
+msgid "You can't create cyclic hierarchies"
+msgstr "Il est interdit d'avoir un cycle dans une hiérarchie. "

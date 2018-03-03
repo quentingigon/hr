@@ -22,7 +22,7 @@ msgstr ""
 #. module: hr_skill
 #: model:ir.model.fields,field_description:hr_skill.field_hr_skill_active
 msgid "Active"
-msgstr ""
+msgstr "Actif"
 
 #. module: hr_skill
 #: model:ir.ui.view,arch_db:hr_skill.view_skill_form
@@ -186,7 +186,7 @@ msgstr "Nom"
 #. module: hr_skill
 #: model:ir.model.fields,field_description:hr_skill.field_hr_skill_parent_id
 msgid "Parent"
-msgstr ""
+msgstr "Parent"
 
 #. module: hr_skill
 #: model:ir.model.fields,field_description:hr_skill.field_hr_skill_parent_left
