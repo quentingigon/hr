@@ -127,7 +127,7 @@ msgstr "Erstellt am"
 #: model:ir.ui.view,arch_db:hr_experience.view_employee_form_inherit
 #: model:ir.ui.view,arch_db:hr_experience.view_professional_form
 msgid "Description"
-msgstr ""
+msgstr "Beschreibung"
 
 #. module: hr_experience
 #: model:ir.model.fields,field_description:hr_experience.field_hr_academic_diploma
