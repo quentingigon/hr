@@ -26,7 +26,7 @@ msgstr ""
 #. module: hr_holidays_imposed_days
 #: model:ir.model.fields,field_description:hr_holidays_imposed_days.field_hr_holidays_imposed_company_id
 msgid "Company"
-msgstr ""
+msgstr "Azienda"
 
 #. module: hr_holidays_imposed_days
 #: model:ir.model.fields,field_description:hr_holidays_imposed_days.field_hr_holidays_imposed_create_uid
@@ -51,7 +51,7 @@ msgstr ""
 #. module: hr_holidays_imposed_days
 #: model:ir.model.fields,field_description:hr_holidays_imposed_days.field_hr_holidays_imposed_display_name
 msgid "Display Name"
-msgstr ""
+msgstr "Nome visualizzato"
 
 #. module: hr_holidays_imposed_days
 #: model:ir.model,name:hr_holidays_imposed_days.model_hr_employee
@@ -84,7 +84,7 @@ msgstr ""
 #. module: hr_holidays_imposed_days
 #: model:ir.model.fields,field_description:hr_holidays_imposed_days.field_hr_holidays_imposed___last_update
 msgid "Last Modified on"
-msgstr ""
+msgstr "Ultima modifica il "
 
 #. module: hr_holidays_imposed_days
 #: model:ir.model.fields,field_description:hr_holidays_imposed_days.field_hr_holidays_imposed_write_uid

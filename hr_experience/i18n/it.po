@@ -139,7 +139,7 @@ msgstr "Diploma"
 #: model:ir.model.fields,field_description:hr_experience.field_hr_curriculum_display_name
 #: model:ir.model.fields,field_description:hr_experience.field_hr_experience_display_name
 msgid "Display Name"
-msgstr ""
+msgstr "Nome visualizzato"
 
 #. module: hr_experience
 #: model:ir.ui.view,arch_db:hr_experience.view_academic_tree
@@ -246,7 +246,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:hr_experience.field_hr_curriculum___last_update
 #: model:ir.model.fields,field_description:hr_experience.field_hr_experience___last_update
 msgid "Last Modified on"
-msgstr ""
+msgstr "Ultima modifica il "
 
 #. module: hr_experience
 #: model:ir.model.fields,field_description:hr_experience.field_hr_academic_write_uid
