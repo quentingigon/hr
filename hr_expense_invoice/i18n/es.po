@@ -41,4 +41,3 @@ msgstr "Informe de gastos"
 #: model:ir.model.fields,field_description:hr_expense_invoice.field_hr_expense_invoice_id
 msgid "Invoice"
 msgstr "Factura"
-
