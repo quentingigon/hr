@@ -112,7 +112,7 @@ msgid "Last Updated on"
 msgstr "Zuletzt aktualisiert am"
 
 #. module: hr_payslip_change_state
-#: code:addons/hr_payslip_change_state/wizard/hr_payslip_change_state.py:49
+#: code:addons/hr_payslip_change_state/wizard/hr_payslip_change_state.py:50
 #, python-format
 msgid "Only draft payslips can be verified,the payslip %s is in %s state"
 msgstr ""
@@ -120,7 +120,7 @@ msgstr ""
 "Lohnnachweis  %s ist im Status %s"
 
 #. module: hr_payslip_change_state
-#: code:addons/hr_payslip_change_state/wizard/hr_payslip_change_state.py:57
+#: code:addons/hr_payslip_change_state/wizard/hr_payslip_change_state.py:58
 #, python-format
 msgid ""
 "Only payslips in states verify or draft can be confirmed, the payslip %s is "
@@ -130,7 +130,7 @@ msgstr ""
 "genehmigt werden. Der Lohnnachweis %s ist im Status %s"
 
 #. module: hr_payslip_change_state
-#: code:addons/hr_payslip_change_state/wizard/hr_payslip_change_state.py:42
+#: code:addons/hr_payslip_change_state/wizard/hr_payslip_change_state.py:43
 #, python-format
 msgid ""
 "Only rejected payslips can be reset to draft, the payslip %s is in %s state"
@@ -139,7 +139,7 @@ msgstr ""
 "werden.  Der Lohnnachweis %s ist im Status %s"
 
 #. module: hr_payslip_change_state
-#: code:addons/hr_payslip_change_state/wizard/hr_payslip_change_state.py:67
+#: code:addons/hr_payslip_change_state/wizard/hr_payslip_change_state.py:68
 #, python-format
 msgid "Payslips"
 msgstr "Lohnnachweise"
@@ -150,7 +150,7 @@ msgid "Set to Draft"
 msgstr "Auf Entwurf setzen"
 
 #. module: hr_payslip_change_state
-#: code:addons/hr_payslip_change_state/wizard/hr_payslip_change_state.py:62
+#: code:addons/hr_payslip_change_state/wizard/hr_payslip_change_state.py:63
 #, python-format
 msgid "The payslip %s is already canceled please deselect it"
 msgstr "Der Lohnnachweis %s ist bereits abgebrochen"
