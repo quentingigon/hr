@@ -22,12 +22,12 @@ msgstr ""
 #. module: hr_skill
 #: model:ir.model.fields,field_description:hr_skill.field_hr_skill_active
 msgid "Active"
-msgstr ""
+msgstr "Aktiv"
 
 #. module: hr_skill
 #: model:ir.ui.view,arch_db:hr_skill.view_skill_form
 msgid "Child Skills"
-msgstr ""
+msgstr "Untergeordnete Fähigkeiten"
 
 #. module: hr_skill
 #: model:ir.model.fields,field_description:hr_skill.field_hr_skill_child_ids
@@ -87,7 +87,7 @@ msgstr "Fähigkeiten der/des Angestellten"
 #: model:ir.actions.act_window,name:hr_skill.hr_employee_normal_action_tree
 #: model:ir.model.fields,field_description:hr_skill.field_hr_skill_employee_skill_ids
 msgid "Employees"
-msgstr ""
+msgstr "Angestellte"
 
 #. module: hr_skill
 #: selection:hr.employee.skill,level:0
@@ -136,7 +136,7 @@ msgstr "Grad"
 #. module: hr_skill
 #: model:ir.model.fields,field_description:hr_skill.field_hr_skill_name
 msgid "Name"
-msgstr "Name"
+msgstr "Bezeichnung"
 
 #. module: hr_skill
 #: model:ir.model.fields,field_description:hr_skill.field_hr_skill_parent_id
@@ -162,7 +162,7 @@ msgstr "Senior"
 #: model:ir.model.fields,field_description:hr_skill.field_hr_employee_skill_skill_id
 #: model:ir.ui.view,arch_db:hr_skill.view_skill_form
 msgid "Skill"
-msgstr ""
+msgstr "Fähigkeit"
 
 #. module: hr_skill
 #: model:ir.actions.act_window,name:hr_skill.open_view_skill_form
@@ -171,7 +171,7 @@ msgstr ""
 #: model:ir.ui.view,arch_db:hr_skill.view_employee_skill_form
 #: model:ir.ui.view,arch_db:hr_skill.view_hr_skill_tree
 msgid "Skills"
-msgstr ""
+msgstr "Fähigkeiten"
 
 #. module: hr_skill
 #: model:ir.actions.act_window,help:hr_skill.action_hr_employee_skill_report
