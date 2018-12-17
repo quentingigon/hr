@@ -70,7 +70,7 @@ msgstr "Zusätzliche Informationen"
 #: model:ir.model.fields,field_description:hr_experience.field_hr_experience_category
 #: model:ir.model.fields,help:hr_experience.field_hr_experience_category
 msgid "Category"
-msgstr ""
+msgstr "Kategorie"
 
 #. module: hr_experience
 #: selection:hr.experience,category:0
@@ -170,7 +170,7 @@ msgstr "Lebenslauf der/des Angestellten"
 #: model:ir.ui.view,arch_db:hr_experience.view_professional_form
 #: model:ir.ui.view,arch_db:hr_experience.view_professional_tree
 msgid "Employer"
-msgstr ""
+msgstr "Arbeitgeber"
 
 #. module: hr_experience
 #: model:ir.model.fields,help:hr_experience.field_hr_academic_partner_id
@@ -178,7 +178,7 @@ msgstr ""
 #: model:ir.model.fields,help:hr_experience.field_hr_curriculum_partner_id
 #: model:ir.model.fields,help:hr_experience.field_hr_experience_partner_id
 msgid "Employer, School, University, Certification Authority"
-msgstr ""
+msgstr "Arbeitgeber, Schule, Universität, Zertifizierungsstelle"
 
 #. module: hr_experience
 #: model:ir.model.fields,field_description:hr_experience.field_hr_academic_end_date
@@ -186,12 +186,12 @@ msgstr ""
 #: model:ir.model.fields,field_description:hr_experience.field_hr_curriculum_end_date
 #: model:ir.model.fields,field_description:hr_experience.field_hr_experience_end_date
 msgid "End date"
-msgstr ""
+msgstr "Enddatum"
 
 #. module: hr_experience
 #: model:ir.ui.menu,name:hr_experience.menu_hr_experience
 msgid "Experiences"
-msgstr ""
+msgstr "Erfahrungen"
 
 #. module: hr_experience
 #: model:ir.model.fields,field_description:hr_experience.field_hr_academic_expire
@@ -283,7 +283,7 @@ msgstr "Ort"
 #: model:ir.model.fields,field_description:hr_experience.field_hr_curriculum_name
 #: model:ir.model.fields,field_description:hr_experience.field_hr_experience_name
 msgid "Name"
-msgstr "Name"
+msgstr "Bezeichnung"
 
 #. module: hr_experience
 #: model:ir.model.fields,field_description:hr_experience.field_hr_academic_partner_id
@@ -291,7 +291,7 @@ msgstr "Name"
 #: model:ir.model.fields,field_description:hr_experience.field_hr_curriculum_partner_id
 #: model:ir.model.fields,field_description:hr_experience.field_hr_experience_partner_id
 msgid "Partner"
-msgstr ""
+msgstr "Partner"
 
 #. module: hr_experience
 #: model:ir.ui.view,arch_db:hr_experience.view_employee_form_inherit
