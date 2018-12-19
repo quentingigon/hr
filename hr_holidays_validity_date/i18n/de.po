@@ -81,6 +81,8 @@ msgstr ""
 msgid ""
 "Warning: The selected dates are out of this holiday type's range. (%s - %s)"
 msgstr ""
+"Urlaub mit dem Typ: %s muss zwischen %s und\n"
+"                        %s liegen"
 
 #~ msgid ""
 #~ "leaves on %s type must be taken between %s and\n"
