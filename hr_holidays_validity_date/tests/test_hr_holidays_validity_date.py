@@ -26,6 +26,7 @@ from odoo.tests import common
 from odoo.exceptions import ValidationError
 from odoo.tools import DEFAULT_SERVER_DATETIME_FORMAT
 from datetime import datetime, timedelta
+from odoo.tools import mute_logger
 
 
 class TestHrHolidaysValidityDate(common.TransactionCase):
