@@ -1,6 +1,6 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-#	* hr_holidays_hour
+# 	* hr_holidays_hour
 #
 msgid ""
 msgstr ""
@@ -108,11 +108,12 @@ msgstr "Wählen Sie zuerst einen Angestellten!"
 #. module: hr_holidays_hour
 #: code:addons/hr_holidays_hour/models/hr_holidays.py:125
 #, python-format
-msgid "The number of remaining hours is not sufficient for this leave type.\n"
+msgid ""
+"The number of remaining hours is not sufficient for this leave type.\n"
 "Please check for allocation requests awaiting validation."
 msgstr ""
-"Die Anzahl der verbleibenden Stunden dieser Urlaubsart ist nicht ausreichend."
-"\n"
+"Die Anzahl der verbleibenden Stunden dieser Urlaubsart ist nicht "
+"ausreichend.\n"
 "Bitte prüfen Sie die zur Genehmigung stehenden Urlaubsanträge."
 
 #. module: hr_holidays_hour
