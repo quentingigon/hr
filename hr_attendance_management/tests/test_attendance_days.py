@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-
 # Copyright (C) 2018 Compassion CH
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 from datetime import datetime, timedelta
@@ -15,7 +13,7 @@ class TestAttendanceDays(SavepointCase):
 
     @classmethod
     def setUpClass(cls):
-        super(TestAttendanceDays, cls).setUpClass()
+        super().setUpClass()
 
         cls.jack = cls.env.ref('hr.employee_fme')
         cls.gilles = cls.env.ref('hr.employee_qdp')
@@ -27,7 +25,7 @@ class TestAttendanceDays(SavepointCase):
         cls.jack.calendar_id = cls.env.ref('resource.timesheet_group1')
         cls.michael.calendar_id = cls.env.ref('resource.timesheet_group1')
 
-        cls.config = cls.env['base.config.settings'].create({
+        cls.config = cls.env['res.config.settings'].create({
             'free_break': 0.25,
             'max_extra_hours': 20})
         cls.config.set_free_break()
@@ -271,7 +269,7 @@ class TestAttendanceDays(SavepointCase):
         date_start = self.last_week[0] - timedelta(weeks=weeks)
         date_stop = self.last_week[0] - timedelta(days=1)
 
-        config = self.env['base.config.settings'].create({})
+        config = self.env['res.config.settings'].create({})
         config.max_extra_hours = 20
         config.set_max_extra_hours()
 

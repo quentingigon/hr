@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 ##############################################################################
 #
 #    Copyright (C) 2019 Compassion CH (http://www.compassion.ch)
@@ -20,11 +19,10 @@ def migrate(env, version):
 
     for att_day in env['hr.attendance.day'].search([]):
         balance = att_day.balance_computation()
-        cr.execute("""
-            UPDATE hr_attendance_day
-            SET day_balance = {}
-            WHERE id = {}
-        """.format(balance, att_day.id))
+        cr.execute(
+            f"UPDATE hr_attendance_day"
+            f"SET day_balance {balance}"
+            f"WHERE id = {att_day.id}")
     employees = env['hr.employee'].search([])
     employees.write({
         'extra_hours_continuous_cap': True,

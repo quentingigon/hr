@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 ##############################################################################
 #
 #       ______ Releasing children from poverty      _
@@ -34,11 +33,12 @@
     'author': "Compassion Switzerland, "
               "Odoo Community Association (OCA)",
     'depends': [
-        'hr_attendance',
-        'hr_public_holidays',
-        'hr_contract'
+        'hr_attendance',            # oca_addons/hr
+        'hr_public_holidays',       # oca_addons/hr
+        'hr_contract',              # oca_addons/hr
+        'base_attendance'               # oca_addons/misc-addons
     ],
-    'version': '10.0.3.0.0',
+    'version': '11.0.0.0.0',
     'auto_install': False,
     'website': 'https://www.compassion.ch',
     'license': 'AGPL-3',

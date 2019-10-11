@@ -2,12 +2,10 @@
 
 <odoo>
     <!-- hr attendance settings -->
-    <record id="hr_attendance_view_config"
-            model="ir.ui.view">
+    <record id="hr_attendance_view_config" model="ir.ui.view">
         <field name="name">hr.attendance.settings.form</field>
-        <field name="model">base.config.settings</field>
-        <field name="inherit_id"
-               ref="hr_attendance.hr_attendance_view_config"/>
+        <field name="model">res.config.settings</field>
+        <field name="inherit_id" ref="base_attendance.hr_attendance_view_config"/>
         <field name="arch"
                type="xml">
             <field name="group_attendance_use_pin"
@@ -37,14 +35,11 @@
         </field>
     </record>
 
-    <record id="view_attendance_rules_tree"
-            model="ir.ui.view">
+    <record id="view_attendance_rules_tree" model="ir.ui.view">
         <field name="name">hr.attendance.rules.tree</field>
         <field name="model">hr.attendance.rules</field>
-        <field name="arch"
-               type="xml">
-            <tree editable="True"
-                  default_order="time_from">
+        <field name="arch" type="xml">
+            <tree default_order="time_from">
                 <field name="time_from" widget="float_time"/>
                 <field name="time_to" widget="float_time"/>
                 <field name="due_break_total" widget="float_time"/>
@@ -115,7 +110,7 @@
     <!-- Menu -->
     <record id="action_hr_attendance_settings" model="ir.actions.act_window">
         <field name="name">Attendance Settings</field>
-        <field name="res_model">base.config.settings</field>
+        <field name="res_model">res.config.settings</field>
         <field name="view_mode">form</field>
         <field name="target">inline</field>
         <field name="view_id" ref="hr_attendance_view_config"/>

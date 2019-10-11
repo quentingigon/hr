@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Copyright (C) 2018 Compassion CH
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 from odoo import models, fields, api, _
@@ -64,12 +63,12 @@ class HrAttendance(models.Model):
     def create(self, vals):
         """ If the corresponding attendance day doesn't exist a new one is
         created"""
-        new_record = super(HrAttendance, self).create(vals)
+        new_record = super().create(vals)
         att_day = new_record._find_related_day()
         new_record.attendance_day_id = att_day
         new_record.working_schedule_id = att_day.working_schedule_id
         att_day.compute_breaks()
-        # start_previous_period = self.env['base.config.settings'].create({})\
+        # start_previous_period = self.env['res.config.settings'].create({})\
         #     .get_penultimate_balance_cron_execution()
         # if att_day.date < start_previous_period:
         #     raise UserError(_('Data change too far back in the past. Please '
@@ -96,10 +95,10 @@ class HrAttendance(models.Model):
             # Update breaks
             att_day_updated = self
 
-        res = super(HrAttendance, self).write(vals)
+        res = super().write(vals)
         att_day_updated._find_related_day()
 
-        # start_previous_period = self.env['base.config.settings'].create({}) \
+        # start_previous_period = self.env['res.config.settings'].create({}) \
         #     .get_penultimate_balance_cron_execution()
         # if att_day_updated.date \
         #         and att_day_updated.date < start_previous_period:

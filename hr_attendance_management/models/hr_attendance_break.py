@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Copyright (C) 2018 Compassion CH
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 from odoo import models, fields, api
@@ -72,7 +71,7 @@ class HrAttendanceBreak(models.Model):
                 start = fields.Datetime.from_string(att_break.start)
                 stop = fields.Datetime.from_string(att_break.stop)
                 delta = stop - start
-                att_break.original_duration = delta.total_seconds() / 3600.0
+                att_break.original_duration = delta.total_seconds() // 3600.0
 
     @api.multi
     @api.depends('original_duration', 'additional_duration')

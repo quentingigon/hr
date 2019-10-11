@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-
 # Copyright (C) 2018 Compassion CH
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
@@ -48,7 +46,7 @@ class HrChangeDayRequest(models.Model):
         day1_id = forced_due_hours.create(day1)
         day2_id = forced_due_hours.create(day2)
 
-        res = super(HrChangeDayRequest, self).create({
+        res = super().create({
             'day1_id': day1_id.id,
             'day2_id': day2_id.id,
             'user_id': vals['user_id']
@@ -69,14 +67,14 @@ class HrChangeDayRequest(models.Model):
             manager = self.get_manager(vals['employee_id'])
             vals['user_id'] = manager.user_id.id if manager else 1  # admin
 
-        return super(HrChangeDayRequest, self).write(vals)
+        return super().write(vals)
 
     @api.multi
     def unlink(self):
         self.mapped('day1_id').unlink()
         self.mapped('day2_id').unlink()
 
-        return super(HrChangeDayRequest, self).unlink()
+        return super().unlink()
 
     @api.multi
     @api.depends('forced1', 'forced2')
@@ -88,6 +86,6 @@ class HrChangeDayRequest(models.Model):
     @api.depends('employee_id', 'date1', 'date2', 'forced')
     def _compute_name(self):
         for h in self:
-            h.name = u'{}, {}/{}, {} changed'\
-                .format(h.employee_id.display_name, h.date1, h.date2,
-                        self.env['hr.employee'].convert_hour_to_time(h.forced))
+
+            h.name = f"{h.employee_id.disply_name}, {h.date1}/{h.date2}, " \
+                     f"{self.env['hr.employee'].convert_hour_to_time(h.forced)} changed"

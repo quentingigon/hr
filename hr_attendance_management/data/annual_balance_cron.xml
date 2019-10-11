@@ -4,6 +4,7 @@
         <record id="ir_cron_compute_annual_balance"
                 model="ir.cron">
             <field name="name">Compute annual extra hours balance</field>
+             <field name="model_id" ref="base.model_ir_cron"/>
             <field name="interval_type">months</field>
             <field name="interval_number">12</field>
             <field name="numbercall">-1</field>

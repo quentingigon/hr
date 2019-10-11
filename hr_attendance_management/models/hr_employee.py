@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-
 # Copyright (C) 2018 Compassion CH
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
@@ -83,7 +81,7 @@ class HrEmployee(models.Model):
                     datetime.datetime.strptime(previous_period.end_date, '%Y-%m-%d')
                 # datetime.datetime.strptime(previous_period.end_date, '%Y-%m-%d') + datetime.timedelta(days=1)
             else:
-                config = self.env['base.config.settings'].create({})
+                config = self.env['res.config.settings'].create({})
                 employee.current_period_start_date = config.get_beginning_date_for_balance_computation()
     @api.multi
     def _compute_work_location(self):
@@ -113,7 +111,7 @@ class HrEmployee(models.Model):
             employee_history = self.env['hr.employee.period'].search([
                 ('employee_id', '=', employee.id)
             ])
-            config = self.env['base.config.settings'].create({})
+            config = self.env['res.config.settings'].create({})
             config.set_beginning_date()
             # Compute from 01.01.2018 as default
             balance = employee.initial_balance
@@ -188,7 +186,7 @@ class HrEmployee(models.Model):
             ], limit=1)
             current_period.write({
                 'balance': extra,
-                'lost': current_period.lost,  # TODO check why lost is often == 0 here
+                'lost': current_period.lost,
                 'previous_balance': balance
             })
 
@@ -250,7 +248,7 @@ class HrEmployee(models.Model):
                      (increasing values as no lost hours can be deduced).
         """
         self.ensure_one()
-        max_extra_hours = self.env['base.config.settings'].create({})\
+        max_extra_hours = self.env['res.config.settings'].create({})\
             .get_max_extra_hours()
         if not start_date:
             start_date = fields.Date.to_string(
@@ -258,9 +256,9 @@ class HrEmployee(models.Model):
         if not end_date:
             end_date = fields.Date.to_string(datetime.date.today())
 
-        if not isinstance(start_date, basestring):
+        if not isinstance(start_date, str):
             start_date = fields.Date.to_string(start_date)
-        if not isinstance(end_date, basestring):
+        if not isinstance(end_date, str):
             end_date = fields.Date.to_string(end_date)
 
         if start_date > end_date:
@@ -353,13 +351,13 @@ class HrEmployee(models.Model):
 
     @api.multi
     def _compute_time_warning_balance(self):
-        max_extra_hours = self.env['base.config.settings'].create({}) \
+        max_extra_hours = self.env['res.config.settings'].create({}) \
             .get_max_extra_hours()
         for employee in self:
             if employee.balance < 0:
                 employee.time_warning_balance = 'red'
             elif max_extra_hours and \
-                    employee.balance >= max_extra_hours * 2 / 3:
+                    employee.balance >= max_extra_hours * 2 // 3:
                 employee.time_warning_balance = 'orange'
             else:
                 employee.time_warning_balance = 'green'
@@ -396,29 +394,39 @@ class HrEmployee(models.Model):
 
     @api.model
     def convert_hour_to_time(self, hour):
-        formatted = '{:02d}:{:02d}'.format(*divmod(int(abs(
-            float(hour) * 60)), 60))
+        formatted = f"""{divmod(int(abs(float(hour) * 60)), 60)[0]}:{divmod(int(abs(float(hour) * 60)), 60)[1]}"""
+        # output of formatted -> '12:00' etc
         return '-' + formatted if hour < 0 else formatted
 
-    # TODO base it on att_day.total_attendance
     @api.multi
     def calc_today_hour(self):
         self.ensure_one()
 
         today = fields.Date.today()
-        attendances_today = self.env['hr.attendance'].search([
-            ('employee_id', '=', self.id), ('check_in', '>=', today)])
-        worked_hours = 0
+        today_attendance_day = self.env['hr.attendance.day'].search([
+            ('employee_id', '=', self.id),
+            ('date', '=', today)
+        ], limit=1)
 
-        for attendance in attendances_today:
-            if attendance.check_out:
-                worked_hours += attendance.worked_hours
-            else:
-                delta = datetime.datetime.now() \
-                        - fields.Datetime.from_string(attendance.check_in)
-                worked_hours += delta.total_seconds() / 3600.0
+        worked_hours = 0
+        if today_attendance_day:
+            worked_hours = today_attendance_day.total_attendance
 
         return worked_hours
+
+        # attendances_today = self.env['hr.attendance'].search([
+        #     ('employee_id', '=', self.id), ('check_in', '>=', today)])
+        # worked_hours = 0
+        #
+        # for attendance in attendances_today:
+        #     if attendance.check_out:
+        #         worked_hours += attendance.worked_hours
+        #     else:
+        #         delta = datetime.datetime.now() \
+        #                 - fields.Datetime.from_string(attendance.check_in)
+        #         worked_hours += delta.total_seconds() // 3600.0
+        #
+        # return worked_hours
 
     def open_balance_graph(self):
         """

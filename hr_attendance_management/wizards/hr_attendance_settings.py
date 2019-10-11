@@ -1,9 +1,7 @@
-# -*- coding: utf-8 -*-
-
 # Copyright (C) 2018 Compassion CH
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-from datetime import timedelta, date
+from datetime import date
 
 from odoo import models, fields, api
 from odoo.exceptions import ValidationError
@@ -11,7 +9,7 @@ from odoo.exceptions import ValidationError
 
 class HrAttendanceSettings(models.TransientModel):
     """ Settings configuration for hr.attendance."""
-    _inherit = 'base.config.settings'
+    _inherit = 'res.config.settings'
 
     free_break = fields.Float('Free break (hour)')
     max_extra_hours = fields.Float('Max extra hours')
@@ -48,14 +46,14 @@ class HrAttendanceSettings(models.TransientModel):
                 'hr_attendance_management.max_extra_hours',
                 str(self.max_extra_hours))
 
-    @api.model
-    def get_default_values(self, _fields):
-        return {
-            'free_break': self.get_free_break(),
-            'max_extra_hours': self.get_max_extra_hours(),
-            'beginning_date_for_balance_computation':
-                self.get_beginning_date_for_balance_computation()
-        }
+    # @api.model
+    # def get_default_values(self, _fields):
+    #     return {
+    #         'free_break': self.get_free_break(),
+    #         'max_extra_hours': self.get_max_extra_hours(),
+    #         'beginning_date_for_balance_computation':
+    #             self.get_beginning_date_for_balance_computation()
+    #     }
 
     @api.model
     def get_beginning_date_for_balance_computation(self):
@@ -72,28 +70,25 @@ class HrAttendanceSettings(models.TransientModel):
         return float(self.env['ir.config_parameter'].get_param(
             'hr_attendance_management.max_extra_hours', '0.0'))
 
+    @api.model
+    def get_values(self):
+        res = super().get_values()
+        res.update(
+            free_break=self.get_free_break(),
+            max_extra_hours=self.get_max_extra_hours(),
+            beginning_date_for_balance_computation=self.get_beginning_date_for_balance_computation(),
+        )
+        return res
 
-class CreateHrAttendance(models.TransientModel):
-    _name = 'create.hr.attendance.day'
-
-    date_from = fields.Date(string="Date from")
-    date_to = fields.Date(string="Date to")
-    employee_ids = fields.Many2many('hr.employee', string='Employee')
-
-    def create_attendance_day(self):
-        date_to = fields.Date.from_string(self.date_to)
-        att_day = self.env['hr.attendance.day']
-
-        for employee_id in self.employee_ids:
-            current_date = fields.Date.from_string(self.date_from)
-            while current_date <= date_to:
-                already_exist = att_day.search([
-                    ('employee_id', '=', employee_id.id),
-                    ('date', '=', current_date)
-                ])
-                if not already_exist:
-                    att_day.create({
-                        'employee_id': employee_id.id,
-                        'date': current_date,
-                    })
-                current_date = current_date + timedelta(days=1)
+    @api.multi
+    def set_values(self):
+        super().set_values()
+        self.env['ir.config_parameter'].sudo().set_param(
+            'free_break', self.set_free_break
+        )
+        self.env['ir.config_parameter'].sudo().set_param(
+            'max_extra_hours', self.set_max_extra_hours
+        )
+        self.env['ir.config_parameter'].sudo().set_param(
+            'beginning_date_for_balance_computation', self.set_beginning_date
+        )

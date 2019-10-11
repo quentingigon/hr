@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-
 # Copyright (C) 2018 Compassion CH
 # Author: Quentin Gigon <gigon.quentin@gmail.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
@@ -13,6 +11,7 @@ _logger = logging.getLogger(__name__)
 
 class HrEmployeePeriod(models.Model):
     _name = "hr.employee.period"
+    _description = "Period of work of an employee"
 
     start_date = fields.Date(string='First date of period')
     end_date = fields.Date(string='Date of balance computation')
@@ -24,14 +23,14 @@ class HrEmployeePeriod(models.Model):
 
     @api.multi
     def write(self, vals):
-        res = super(HrEmployeePeriod, self).write(vals)
+        res = super().write(vals)
         for period in self:
             if 'continuous_cap' in vals or 'end_date' in vals or 'start_date' in vals:
                 previous_period = self.env['hr.employee.period'].search([
                     ('employee_id', '=', period.employee_id.id),
                     ('end_date', '<=', period.start_date)
                 ], order='end_date desc', limit=1)
-                config = self.env['base.config.settings'].create({})
+                config = self.env['res.config.settings'].create({})
                 config.set_beginning_date()
                 start_date = None
                 end_date = period.end_date
@@ -57,7 +56,7 @@ class HrEmployeePeriod(models.Model):
 
     @api.multi
     def create(self, vals):
-        res = super(HrEmployeePeriod, self).create(vals)
+        res = super().create(vals)
 
         start_date = vals['start_date']
         end_date = vals['end_date']
@@ -101,10 +100,10 @@ class HrEmployeePeriod(models.Model):
                     ('id', '=', vals['employee_id'])
                 ])
 
-            if isinstance(start_date, basestring):
+            if isinstance(start_date, str):
                 start_date = datetime.datetime.strptime(start_date, '%Y-%m-%d')
 
-            if isinstance(end_date, basestring):
+            if isinstance(end_date, str):
                 end_date = datetime.datetime.strptime(end_date, '%Y-%m-%d')
 
             # We want to create a period inside another one

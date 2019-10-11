@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 ##############################################################################
 #
 #    Copyright (C) 2019 Compassion CH (http://www.compassion.ch)
@@ -13,7 +12,7 @@ from openupgradelib import openupgrade
 from datetime import date
 
 
-# TODO this migration should work but if made in year 2020, it will not create a period for the year 2019
+# this migration works but if made in year 2020, it will not create a period for the year 2019
 @openupgrade.migrate(use_env=True)
 def migrate(env, version):
     if not version:

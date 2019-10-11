@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-
 # Copyright (C) 2018 Compassion CH
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 from datetime import datetime, timedelta
@@ -15,7 +13,7 @@ class TestAnnualBalance(SavepointCase):
 
     @classmethod
     def setUpClass(cls):
-        super(TestAnnualBalance, cls).setUpClass()
+        super().setUpClass()
 
         cls.jack = cls.env.ref('hr.employee_fme')
         cls.gilles = cls.env.ref('hr.employee_qdp')
@@ -27,7 +25,7 @@ class TestAnnualBalance(SavepointCase):
         cls.jack.calendar_id = cls.env.ref('resource.timesheet_group1')
         cls.michael.calendar_id = cls.env.ref('resource.timesheet_group1')
 
-        cls.config = cls.env['base.config.settings'].create({})
+        cls.config = cls.env['res.config.settings'].create({})
 
         # Create attendance days for employees
         attendances = cls.env['hr.attendance'].search([], order='check_in')
@@ -69,13 +67,6 @@ class TestAnnualBalance(SavepointCase):
         self.config.set_free_break()
         self.assertEqual(self.config.get_free_break(), 0.25)
 
-        # TODO last balance CRON execution does not exist anymore
-        # def change_date_and_raises(delta):
-        #     self.config.next_balance_cron_execution = \
-        #         fields.Date.from_string(
-        #             self.config.get_last_balance_cron_execution())\
-        #         + timedelta(days=delta)
-
         self.michael.extra_hours_continuous_cap = False
         self.jack.extra_hours_continuous_cap = True
         for person in [self.jack, self.michael]:
@@ -104,8 +95,6 @@ class TestAnnualBalance(SavepointCase):
         self.assertEqual(self.michael.balance, 2.5)
         self.assertEqual(self.michael.extra_hours_lost, 0)
 
-        # self.assertRaises(ValidationError, change_date_and_raises(364))
-
         # Execute cron
         self.env['hr.employee.period'].search([
             ('employee_id', '=', self.jack.id)
@@ -117,7 +106,6 @@ class TestAnnualBalance(SavepointCase):
         # michael extra hours should be affected by the yearly cutoff
         self.assertEqual(self.jack.balance, 2)
         self.assertEqual(self.michael.balance, 2.5)
-        # self.assertRaises(ValidationError, change_date_and_raises(2))
 
         # Now will modify an attendance in the recent past and see if the
         # update catch it correctly.

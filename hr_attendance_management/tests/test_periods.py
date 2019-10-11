@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-
 # Copyright (C) 2018 Compassion CH
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
@@ -15,7 +13,7 @@ class TestPeriod(SavepointCase):
 
     @classmethod
     def setUpClass(cls):
-        super(TestPeriod, cls).setUpClass()
+        super().setUpClass()
 
         cls.jack = cls.env.ref('hr.employee_fme')
 

@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-
 # Copyright (C) 2018 Compassion CH
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
@@ -32,7 +30,7 @@ class HrForcedDueHours(models.Model):
             for field in ['employee_id', 'date', 'forced_due_hours']:
                 old_vals[field] = getattr(record, field)
 
-            super(HrForcedDueHours, record).write(vals)
+            super().write(vals)
 
             record.recompute_due_hours(
                 old_vals['employee_id'].id, old_vals['date'])
@@ -43,6 +41,6 @@ class HrForcedDueHours(models.Model):
         employee_ids = self.mapped('employee_id.id')
         dates = self.mapped('date')
 
-        super(HrForcedDueHours, self).unlink()
+        super().unlink()
         for i in range(len(employee_ids)):
             self.recompute_due_hours(employee_ids[i], dates[i])
