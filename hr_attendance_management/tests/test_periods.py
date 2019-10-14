@@ -86,11 +86,11 @@ class TestPeriod(SavepointCase):
         previous_period = self.get_previous_period(start_date, self.jack.id)
         next_period = self.get_next_period(end_date, self.jack.id)
         self.assertEquals(datetime.strptime(previous_period.end_date, '%Y-%m-%d').date(),
-                          (start_date - timedelta(days=1)).date())
+                          start_date.date())
         self.assertEquals(old_surrounding_start_date, previous_period.start_date)
         self.assertEquals(next_period.end_date, old_surrounding_end_date)
         self.assertEquals(datetime.strptime(next_period.start_date, '%Y-%m-%d').date(),
-                          (end_date + timedelta(days=1)).date())
+                          end_date.date())
 
         all_periods.unlink()
 
@@ -118,7 +118,7 @@ class TestPeriod(SavepointCase):
 
         previous_period = self.get_previous_period(start_date, self.jack.id)
         self.assertEquals(datetime.strptime(previous_period.end_date, '%Y-%m-%d').date(),
-                          (start_date - timedelta(days=1)).date())
+                          start_date.date())
         self.assertEquals(old_previous_overlapping_start_date, previous_period.start_date)
 
         next_period = self.get_next_period(end_date, self.jack.id)
@@ -145,10 +145,10 @@ class TestPeriod(SavepointCase):
         self.assertEquals(initial_periods_count + 2, self.get_periods_count(self.jack.id))
 
         new_previous_period = self.get_previous_period(start_date, self.jack.id)
-        self.assertEquals((datetime.strptime(old_previous_end_date, '%Y-%m-%d') + timedelta(days=1)).date(),
+        self.assertEquals(datetime.strptime(old_previous_end_date, '%Y-%m-%d').date(),
                           datetime.strptime(new_previous_period.start_date, '%Y-%m-%d').date())
         self.assertEquals(datetime.strptime(new_previous_period.end_date, '%Y-%m-%d').date(),
-                          (start_date - timedelta(days=1)).date())
+                          start_date.date())
 
         all_periods.unlink()
 
@@ -186,9 +186,9 @@ class TestPeriod(SavepointCase):
         new_next_period = self.get_next_period(end_date, self.jack.id)
         self.assertEquals(new_previous_period.start_date, old_previous_overlapping_start_date)
         self.assertEquals(datetime.strptime(new_previous_period.end_date, '%Y-%m-%d').date(),
-                          (start_date - timedelta(days=1)).date())
+                          start_date.date())
         self.assertEquals(datetime.strptime(new_next_period.start_date, '%Y-%m-%d').date(),
-                          (end_date + timedelta(days=1)).date())
+                          end_date.date())
         self.assertEquals(new_next_period.end_date, old_next_overlapping_end_date)
 
         all_periods.unlink()
@@ -202,13 +202,13 @@ class TestPeriod(SavepointCase):
     def get_next_period(self, end_date, employee_id):
         return self.env['hr.employee.period'].search([
             ('employee_id', '=', employee_id),
-            ('start_date', '>', end_date)
+            ('start_date', '>=', end_date)
         ], order='start_date asc', limit=1)
 
     def get_previous_period(self, start_date, employee_id):
         return self.env['hr.employee.period'].search([
             ('employee_id', '=', employee_id),
-            ('end_date', '<', start_date)
+            ('end_date', '<=', start_date)
         ], order='end_date desc', limit=1)
 
     def create_period(self, start_date, end_date, employee_id, continuous_cap, balance, initial_balance, lost):

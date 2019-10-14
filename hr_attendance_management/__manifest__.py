@@ -36,7 +36,7 @@
         'hr_attendance',            # oca_addons/hr
         'hr_public_holidays',       # oca_addons/hr
         'hr_contract',              # oca_addons/hr
-        'base_attendance'               # oca_addons/misc-addons
+        'base_attendance'           # oca_addons/misc-addons
     ],
     'version': '11.0.0.0.0',
     'auto_install': False,
