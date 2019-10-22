@@ -51,7 +51,7 @@ class HrEmployee(models.Model):
 
     period_ids = fields.One2many('hr.employee.period', 'employee_id',
                                  string='History Periods', readonly=True,
-                                 compute="_compute_periods")
+                                 compute="_compute_periods", oldname="history_entries_ids")
 
     ##########################################################################
     #                             FIELDS METHODS                             #
@@ -129,9 +129,6 @@ class HrEmployee(models.Model):
             # so we just assign the value
             if final_balance:
                 employee.balance = final_balance
-                # employee.write({
-                #     'balance': final_balance
-                # })
             else:
                 extra, lost = employee.past_balance_computation(
                     start_date=start_date,
@@ -140,10 +137,6 @@ class HrEmployee(models.Model):
 
                 employee.balance = extra
                 employee.extra_hours_lost = lost
-                # employee.write({
-                #     'balance': extra,
-                #     'extra_hours_lost': lost
-                # })
 
             if store:
                 previous_period = None
