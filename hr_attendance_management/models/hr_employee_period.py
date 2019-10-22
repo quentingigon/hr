@@ -13,46 +13,87 @@ class HrEmployeePeriod(models.Model):
     _name = "hr.employee.period"
     _description = "Period of work of an employee"
 
+    _order = "start_date"
+
     start_date = fields.Date(string='First date of period')
-    end_date = fields.Date(string='Date of balance computation')
-    balance = fields.Float(string='Hours balance at the date of computation', readonly=True)
-    previous_balance = fields.Float(string='Balance of previous period', readonly=True)
-    lost = fields.Float(string='Hours lost at the date of computation', readonly=True)
+    end_date = fields.Date(string='Last date of period (exclusive)')
+    end_date_display = fields.Date(string="Last date of period",
+                                   compute="_compute_display_of_end_date")
+    balance = fields.Float(string='Balance of period')
+    final_balance = fields.Float(string="Total balance at end of period",
+                                 compute='_compute_final_balance',
+                                 readonly=True,
+                                 store=True)
+    previous_period = fields.Many2one('hr.employee.period',
+                                      string="Previous period",
+                                      readonly=True)
+    lost = fields.Float(string='Hours lost', readonly=True)
     employee_id = fields.Many2one("hr.employee", string='Employee', readonly=True)
     continuous_cap = fields.Boolean(string='Continuous cap for this period')
 
-    @api.multi
-    def write(self, vals):
-        res = super().write(vals)
+    @api.depends('end_date')
+    def _compute_display_of_end_date(self):
         for period in self:
-            if 'continuous_cap' in vals or 'end_date' in vals or 'start_date' in vals:
-                previous_period = self.env['hr.employee.period'].search([
-                    ('employee_id', '=', period.employee_id.id),
-                    ('end_date', '<=', period.start_date)
-                ], order='end_date desc', limit=1)
-                config = self.env['res.config.settings'].create({})
-                config.set_beginning_date()
-                start_date = None
-                end_date = period.end_date
-                balance = None
+            if period.end_date:
+                period.end_date_display = datetime.datetime.strptime(period.end_date, '%Y-%m-%d') \
+                                          - datetime.timedelta(days=1)
 
-                if previous_period:
-                    # start_date = datetime.datetime.strptime(previous_period.end_date, '%Y-%m-%d') + \
-                    #              datetime.timedelta(days=1)
-                    start_date = datetime.datetime.strptime(previous_period.end_date, '%Y-%m-%d')
-                    balance = previous_period.balance
-                    if 'start_date' in vals:
-                        start_date = vals['start_date']
-                    elif 'end_date' in vals:
-                        end_date = vals['end_date']
-                else:
-                    start_date = config.get_beginning_date_for_balance_computation()
-                    balance = period.employee_id.initial_balance
+    @api.depends('previous_period.final_balance', 'balance')
+    def _compute_final_balance(self):
+        for period in self:
+            period.final_balance = period.update_period(origin="compute").final_balance
 
-                period.employee_id.update_past_periods(start_date,
-                                                       end_date,
-                                                       balance)
-        return res
+    def update_period(self, origin=None):
+        """
+        This function recompute balance and lost hours for one period.
+        :return:
+        """
+        for current_period in self:
+            balance, final_balance = current_period.calculate_balance_and_final_balance()
+
+            # If we come for the compute_final_balance method, don't write but just assign value
+            if origin == "compute":
+                current_period.final_balance = final_balance
+                current_period.balance = balance
+
+            else:
+                if abs(current_period.final_balance - final_balance) > 0.1:
+                    current_period.write({
+                        'final_balance': final_balance
+                    })
+
+                if abs(current_period.balance - balance) > 0.1:
+                    current_period.write({
+                        'balance': balance
+                    })
+
+            return current_period
+
+    def calculate_balance_and_final_balance(self):
+        start_date = self.start_date
+        end_date = self.end_date
+        previous_balance = None
+        balance_of_period = self.balance
+
+        if self.previous_period:
+            previous_balance = self.previous_period.final_balance
+        else:
+            previous_balance = self.employee_id.initial_balance
+
+        extra, lost = self.employee_id.past_balance_computation(
+            start_date=start_date,
+            end_date=end_date,
+            existing_balance=previous_balance)
+
+        final_balance = extra
+        computed_balance = extra - previous_balance
+        # the balance of the period was modified by an user
+        if abs(balance_of_period - computed_balance) > 0.1:
+            final_balance = final_balance + balance_of_period - computed_balance
+
+        balance = extra - previous_balance
+
+        return balance, final_balance
 
     @api.multi
     def create(self, vals):
@@ -67,38 +108,38 @@ class HrEmployeePeriod(models.Model):
 
         if end_date and start_date and not origin == "override":
 
-            employee_periods = self.env['hr.employee.period'].search([
-                ('employee_id', '=', vals['employee_id'])
-            ])
-            # last period before start_date
-            previous_period = self.env['hr.employee.period'].search([
-                ('employee_id', '=', vals['employee_id']),
-                ('end_date', '<=', start_date)
-            ], order='end_date desc', limit=1)
-            # period that begins before and finish after start_date
-            previous_overlapping_period = self.env['hr.employee.period'].search([
-                ('employee_id', '=', vals['employee_id']),
-                ('end_date', '>', start_date),
-                ('end_date', '<', end_date),
-                ('start_date', '<', start_date)
-            ], order='end_date desc', limit=1)
-            # period that begins before and finish after end_date
-            next_overlapping_period = self.env['hr.employee.period'].search([
-                ('employee_id', '=', vals['employee_id']),
-                ('start_date', '>', start_date),
-                ('start_date', '<', end_date),
-                ('end_date', '>', end_date)
-            ], order='start_date asc', limit=1)
-            # period that begins before start_date and finish after end_date
-            surrounding_period = self.env['hr.employee.period'].search([
-                ('employee_id', '=', vals['employee_id']),
-                ('start_date', '<', start_date),
-                ('end_date', '>', end_date)
-            ])
-
-            employee = self.env['hr.employee'].search([
-                    ('id', '=', vals['employee_id'])
+            employee = res.employee_id
+            if not employee:
+                employee = self.env['hr.employee'].search([
+                    ('employee_id', '=', vals['employee_id'])
                 ])
+            employee_periods = employee.period_ids
+
+            # last period before start_date
+            previous_period = None
+            previous_periods = employee_periods.filtered(
+                lambda r: r.end_date <= start_date
+            ).sorted(key=lambda r: r.start_date)
+            if previous_periods:
+                previous_period = previous_periods[-1]
+
+            # period that begins before and finish after start_date
+            previous_overlapping_period = employee_periods.filtered(
+                lambda r: end_date >= r.end_date > start_date and r.start_date < start_date)
+
+            # period that begins before and finish after end_date
+            next_overlapping_period = employee_periods.filtered(
+                lambda r: end_date > r.start_date > start_date and r.end_date >= end_date)
+
+            # period that begins before start_date and finish after end_date
+            surrounding_period = employee_periods.filtered(
+                lambda r: r.start_date < start_date and r.end_date > end_date)
+
+            # period that is inside the new one
+            surrounded_periods = employee_periods.filtered(
+                lambda r: start_date <= r.start_date < end_date and start_date < r.end_date <= end_date
+                and r.id != res.id
+            )
 
             if isinstance(start_date, str):
                 start_date = datetime.datetime.strptime(start_date, '%Y-%m-%d')
@@ -111,88 +152,88 @@ class HrEmployeePeriod(models.Model):
                 surround_start = surrounding_period.start_date
                 surround_end = surrounding_period.end_date
                 surround_continuous_cap = surrounding_period.continuous_cap
+                surround_period_previous_period_id = surrounding_period.previous_period.id
                 employee_id = surrounding_period.employee_id
                 surrounding_period.unlink()
 
-                balance_previous = None
-                if previous_period:
-                    balance_previous = previous_period.balance
-                else:
-                    balance_previous = employee.initial_balance
-
                 # Creates a period from the beginning of the surrounding period
-                # to just before the beginning of the new period
-                self.create_period(start_date=surround_start,
-                                   # end_date=start_date - datetime.timedelta(days=1),
-                                   end_date=start_date,
-                                   employee_id=employee_id.id,
-                                   balance=0,
-                                   previous_balance=balance_previous,
-                                   continuous_cap=surround_continuous_cap,
-                                   origin="override")
+                # to the beginning of the new period
+                period1 = self.create_period(start_date=surround_start,
+                                             end_date=start_date,
+                                             employee_id=employee_id.id,
+                                             balance=0,
+                                             previous_period=surround_period_previous_period_id,
+                                             continuous_cap=surround_continuous_cap,
+                                             origin="override")
 
-                # Creates a period from just after the end of the new period
+                res.write({
+                    'previous_period': period1.id
+                })
+
+                # Creates a period from the end of the new period
                 # to the end of the surrounding period
-                # start_date=end_date + datetime.timedelta(days=1)
                 self.create_period(start_date=end_date,
                                    end_date=surround_end,
                                    employee_id=employee_id.id,
                                    balance=0,
-                                   previous_balance=0,
+                                   previous_period=res.id,
                                    continuous_cap=surround_continuous_cap,
                                    origin="override")
 
-                #employee.update_past_periods(surround_start, start_date - datetime.timedelta(days=1), balance_previous)
-                employee.update_past_periods(surround_start, start_date, balance_previous)
-
+                period1.update_period()
             else:
                 if previous_period:
                     previous_end_date = datetime.datetime.strptime(previous_period.end_date, '%Y-%m-%d')
                     # Periods not overlapping and with the space for a new one
                     if not previous_overlapping_period and (start_date - previous_end_date).days > 1:
                         # Creates period between previous_period.end_date and start_date of new one
-                        self.create_period(start_date=previous_end_date,
-                                           # start_date=previous_end_date + datetime.timedelta(days=1)
-                                           end_date=start_date,
-                                           # end_date=start_date - datetime.timedelta(days=1),
-                                           employee_id=previous_period.employee_id.id,
-                                           balance=0,
-                                           previous_balance=previous_period.balance,
-                                           continuous_cap=self.employee_id.extra_hours_continuous_cap,
-                                           origin="override")
+                        period = self.create_period(start_date=previous_end_date,
+                                                    end_date=start_date,
+                                                    employee_id=previous_period.employee_id.id,
+                                                    balance=0,
+                                                    previous_period=previous_period.id,
+                                                    continuous_cap=self.employee_id.extra_hours_continuous_cap,
+                                                    origin="override")
 
-                        # employee.update_past_periods(previous_end_date,
-                        #                              start_date,
-                        #                              previous_period.balance)
+                        res.write({
+                            'previous_period': period.id
+                        })
+                        period.update_period()
 
+                    res.write({
+                        'previous_period': previous_period.id
+                    })
                 if previous_overlapping_period:
                     # Modify first previous overlapping period
-                    previous_overlapping_period.write({
-                        # 'end_date': start_date - datetime.timedelta(days=1)
-                        'end_date': start_date
+                    previous_overlapping_period.end_date = start_date
+                    res.write({
+                        'previous_period': previous_overlapping_period.id
                     })
+                    previous_overlapping_period.update_period()
 
                 # A following period overlap with the new one
                 if next_overlapping_period:
                     # Modify next overlapping period
                     next_overlapping_period.write({
-                        # 'start_date': end_date + datetime.timedelta(days=1)
-                        'start_date': end_date
+                        'start_date': end_date,
+                        'previous_period': res.id
                     })
 
-                else:
-                    employee.update_past_periods(start_date,
-                                                 end_date,
-                                                 employee.initial_balance)
+                if surrounded_periods:
+                    for period in surrounded_periods:
+                        # deletes useless period
+                        period.unlink()
 
+                res = res.update_period()
         return res
 
-    def create_period(self, start_date, end_date, employee_id, balance, previous_balance, continuous_cap, origin):
-        self.env['hr.employee.period'].create({
+    def create_period(self, start_date, end_date, employee_id, balance,
+                      previous_period, continuous_cap, origin):
+        return self.env['hr.employee.period'].create({
             'start_date': start_date,
             'end_date': end_date,
             'balance': balance,
-            'previous_balance': previous_balance,
+            'previous_period': previous_period,
             'lost': 0,
             'employee_id': employee_id,
             'continuous_cap': continuous_cap,

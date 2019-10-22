@@ -441,7 +441,7 @@ class HrAttendanceDay(models.Model):
         for day in self:
             lower_bound_period = self.env['hr.employee.period'].search([
                 ('employee_id', '=', day.employee_id.id),
-                ('end_date', '<', day.date)
+                ('end_date', '<=', day.date)
             ], order='end_date desc', limit=1)
             upper_bound_period = self.env['hr.employee.period'].search([
                 ('employee_id', '=', day.employee_id.id),
@@ -454,23 +454,19 @@ class HrAttendanceDay(models.Model):
             end_date = None
             balance = None
             if lower_bound_period:
-                start_date = (datetime.datetime.strptime(lower_bound_period.end_date, '%Y-%m-%d') +
-                              datetime.timedelta(days=1))
+                start_date = datetime.datetime.strptime(lower_bound_period.end_date, '%Y-%m-%d')
                 balance = lower_bound_period.balance
             else:
                 start_date = datetime.datetime.strptime(config.get_beginning_date_for_balance_computation(), '%Y-%m-%d')
                 balance = day.employee_id.initial_balance
             if upper_bound_period:
-                end_date = (datetime.datetime.strptime(upper_bound_period.start_date, '%Y-%m-%d') -
-                            datetime.timedelta(days=1))
+                end_date = datetime.datetime.strptime(upper_bound_period.start_date, '%Y-%m-%d')
             else:
                 end_date = datetime.datetime.today()
 
             if start_date < end_date:
-                day.employee_id.update_past_periods(start_date=start_date,
-                                                    end_date=end_date,
-                                                    balance=balance)
-                day.employee_id.compute_balance()
+                first_period = sorted(day.employee_id.periods_ids,  key=lambda r: r.end_date)[0]
+                first_period.update_period()
 
     @api.multi
     def open_attendance_day(self):
