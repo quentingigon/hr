@@ -9,7 +9,56 @@ from odoo import models, fields, api
 _logger = logging.getLogger(__name__)
 
 
+##########################################################################
+#                             STATIC METHODS                             #
+##########################################################################
+
+def get_previous_period(employee_periods, res):
+    previous_period = None
+    previous_periods = employee_periods.filtered(
+            lambda r: r.end_date <= res.start_date
+        ).sorted(key=lambda r: r.start_date)
+    if previous_periods:
+        previous_period = previous_periods[-1]
+    return previous_period
+
+
+def get_previous_overlapping_period(employee_periods, res):
+    return employee_periods.filtered(
+        lambda r: res.end_date >= r.end_date > res.start_date
+        and r.start_date < res.start_date)
+
+
+def get_next_overlapping_period(employee_periods, res):
+    return employee_periods.filtered(
+        lambda r: res.end_date > r.start_date > res.start_date
+        and r.end_date >= res.end_date)
+
+
+def get_surrounding_period(employee_periods, res):
+    return employee_periods.filtered(
+        lambda r: r.start_date < res.start_date
+        and r.end_date > res.end_date)
+
+
+def get_surrounded_periods(employee_periods, res):
+    return employee_periods.filtered(
+        lambda r: res.start_date <= r.start_date < res.end_date
+        and res.start_date < r.end_date <= res.end_date
+        and r.id != res.id)
+
+
 class HrEmployeePeriod(models.Model):
+    """
+   This class represent a period of work of an employee.
+   It contains the balance of hours between the start_date and end_date
+   and also the final_balance of the employee at the end_date.
+   Periods are linked together as a LinkedList, where a period has
+   a reference to its previous_period (None if first period)
+   and an update to one period will update subsequently all
+   following periods.
+   """
+
     _name = "hr.employee.period"
     _description = "Period of work of an employee"
 
@@ -125,19 +174,19 @@ class HrEmployeePeriod(models.Model):
             employee_periods = employee.period_ids
 
             # last period before start_date
-            previous_period = self.get_previous_period(employee_periods)
+            previous_period = get_previous_period(employee_periods, res)
 
             # period that begins before and finish after start_date
-            previous_overlapping_period = self.get_previous_overlapping_period(employee_periods)
+            previous_overlapping_period = get_previous_overlapping_period(employee_periods, res)
 
             # period that begins before and finish after end_date
-            next_overlapping_period = self.get_next_overlapping_period(employee_periods)
+            next_overlapping_period = get_next_overlapping_period(employee_periods, res)
 
             # period that begins before start_date and finish after end_date
-            surrounding_period = self.get_surrounding_period(employee_periods)
+            surrounding_period = get_surrounding_period(employee_periods, res)
 
             # period that is inside the new one
-            surrounded_periods = self.get_surrounded_periods(employee_periods, res.id)
+            surrounded_periods = get_surrounded_periods(employee_periods, res)
 
             # Convert start and end dates to dates if they are strings
             if isinstance(start_date, str):
@@ -253,33 +302,3 @@ class HrEmployeePeriod(models.Model):
             'continuous_cap': continuous_cap,
             'origin': origin
         })
-
-    def get_previous_period(self, employee_periods):
-        previous_period = None
-        previous_periods = employee_periods.filtered(
-                lambda r: r.end_date <= self.start_date
-            ).sorted(key=lambda r: r.start_date)[-1]
-        if previous_periods:
-            previous_period = previous_periods[-1]
-        return previous_period
-
-    def get_previous_overlapping_period(self, employee_periods):
-        return employee_periods.filtered(
-            lambda r: self.end_date >= r.end_date > self.start_date
-            and r.start_date < self.start_date)
-
-    def get_next_overlapping_period(self, employee_periods):
-        return employee_periods.filtered(
-            lambda r: self.end_date > r.start_date > self.start_date
-            and r.end_date >= self.end_date)
-
-    def get_surrounding_period(self, employee_periods):
-        return employee_periods.filtered(
-            lambda r: r.start_date < self.start_date
-            and r.end_date > self.end_date)
-
-    def get_surrounded_periods(self, employee_periods, res_id):
-        return employee_periods.filtered(
-            lambda r: self.start_date <= r.start_date < self.end_date
-            and self.start_date < r.end_date <= self.end_date
-            and r.id != res_id)
