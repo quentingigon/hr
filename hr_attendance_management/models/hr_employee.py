@@ -211,7 +211,7 @@ class HrEmployee(models.Model):
             start_date = fields.Date.to_string(
                 datetime.date.today().replace(month=1, day=1))
         if not end_date:
-            end_date = fields.Date.to_string(datetime.date.today())
+            end_date = fields.Date.to_string(datetime.date.today() + datetime.timedelta(days=1))
 
         if not isinstance(start_date, str):
             start_date = fields.Date.to_string(start_date)
