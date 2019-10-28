@@ -47,6 +47,26 @@ class TestAttendanceDays(SavepointCase):
             last_monday + timedelta(days=6),    # sunday
         ]
 
+        # Create rules
+        cls.env['hr.attendance.rules'].create({
+            'time_from': 0,
+            'time_to': 5,
+            'due_break': 0,
+            'due_break_total': 0
+        })
+        cls.env['hr.attendance.rules'].create({
+            'time_from': 7,
+            'time_to': 9,
+            'due_break': 0.25,
+            'due_break_total': 0.5
+        })
+        cls.env['hr.attendance.rules'].create({
+            'time_from': 9,
+            'time_to': 24,
+            'due_break': 0.75,
+            'due_break_total': 1
+        })
+
     ##########################################################################
     #                           ATTENDANCE DAY                               #
     ##########################################################################
@@ -325,6 +345,13 @@ class TestAttendanceDays(SavepointCase):
     #                             LEAVE REQUEST                              #
     ##########################################################################
 
+    def create_attendance_day(self, date, employee):
+        date_bis = datetime.strptime(date, "%Y-%m-%d").date()
+        self.env['hr.attendance.day'].create({
+            'date': date,
+            'employee_id': employee,
+        })
+
     def test_attendance_days_on_leave_request(self):
         """
         Approved leave request of pieter in the odoo demo database
@@ -354,10 +381,11 @@ class TestAttendanceDays(SavepointCase):
         }
 
         for date in data.keys():
-            self.env['hr.employee'].\
-                _cron_create_attendance(
-                domain=[('id', '=', self.pieter.id)],
-                day=date)
+            self.create_attendance_day(date, self.pieter.id)
+            # self.env['hr.employee'].\
+            #     _cron_create_attendance(
+            #     domain=[('id', '=', self.pieter.id)],
+            #     day=date)
 
         self.assertNotEqual(leave.attendance_day_ids, None)
 
