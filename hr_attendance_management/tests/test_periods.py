@@ -20,8 +20,8 @@ class TestPeriod(SavepointCase):
         cls.start_date_1 = datetime.today().replace(year=2018, month=1, day=1)
         cls.end_date_1 = datetime.today().replace(year=2018, month=6, day=1)
 
-        cls.start_date_2 = datetime.today().replace(year=2018, month=6, day=7)
-        cls.end_date_2 = datetime.today().replace(year=2018, month=12, day=31)
+        cls.start_date_2 = datetime.today().replace(year=2018, month=6, day=1)
+        cls.end_date_2 = datetime.today().replace(year=2019, month=1, day=1)
 
         cls.start_date_3 = datetime.today().replace(year=2019, month=1, day=1)
         cls.end_date_3 = datetime.today().replace(year=2019, month=6, day=1)
@@ -34,33 +34,33 @@ class TestPeriod(SavepointCase):
             'start_date': cls.start_date_1,
             'end_date': cls.end_date_1,
             'balance': 0,
-            'previous_balance': 0,
+            'previous_period': None,
             'lost': 0,
             'employee_id': cls.jack.id,
             'continuous_cap': True,
-            'origin': "override"
+            'origin': "create"
         })
 
         cls.period2 = cls.env['hr.employee.period'].create({
             'start_date': cls.start_date_2,
             'end_date': cls.end_date_2,
             'balance': 0,
-            'previous_balance': 0,
+            'previous_period': cls.period1.id,
             'lost': 0,
             'employee_id': cls.jack.id,
             'continuous_cap': True,
-            'origin': "override"
+            'origin': "create"
         })
 
         cls.period3 = cls.env['hr.employee.period'].create({
             'start_date': cls.start_date_3,
             'end_date': cls.end_date_3,
             'balance': 0,
-            'previous_balance': 0,
+            'previous_period': cls.period2.id,
             'lost': 0,
             'employee_id': cls.jack.id,
             'continuous_cap': True,
-            'origin': "override"
+            'origin': "create"
         })
 
     # Add a period "inside" another one. 1 more periods should be created (after) and 1 should be modified
@@ -76,7 +76,7 @@ class TestPeriod(SavepointCase):
         old_surrounding_end_date = old_surrounding_period.end_date
 
         initial_periods_count = self.get_periods_count(self.jack.id)
-        self.create_period(start_date, end_date, self.jack.id, True, balance=0, initial_balance=0, lost=0)
+        self.create_period(start_date, end_date, self.jack.id, True, balance=0, previous_period=None, lost=0)
 
         all_periods = self.env['hr.employee.period'].search([
             ('employee_id', '=', self.jack.id)
@@ -109,7 +109,7 @@ class TestPeriod(SavepointCase):
         old_previous_overlapping_start_date = old_previous_overlapping.start_date
 
         initial_periods_count = self.get_periods_count(self.jack.id)
-        self.create_period(start_date, end_date, self.jack.id, True, balance=0, initial_balance=0, lost=0)
+        self.create_period(start_date, end_date, self.jack.id, True, balance=0, previous_period=None, lost=0)
 
         all_periods = self.env['hr.employee.period'].search([
             ('employee_id', '=', self.jack.id)
@@ -137,7 +137,7 @@ class TestPeriod(SavepointCase):
         old_previous_end_date = old_previous_period.end_date
 
         initial_periods_count = self.get_periods_count(self.jack.id)
-        self.create_period(start_date, end_date, self.jack.id, True, balance=0, initial_balance=0, lost=0)
+        self.create_period(start_date, end_date, self.jack.id, True, balance=0, previous_period=None, lost=0)
 
         all_periods = self.env['hr.employee.period'].search([
             ('employee_id', '=', self.jack.id)
@@ -175,7 +175,7 @@ class TestPeriod(SavepointCase):
         old_next_overlapping_end_date = old_next_overlapping.end_date
 
         initial_periods_count = self.get_periods_count(self.jack.id)
-        self.create_period(start_date, end_date, self.jack.id, True, balance=0, initial_balance=0, lost=0)
+        self.create_period(start_date, end_date, self.jack.id, True, balance=0, previous_period=None, lost=0)
 
         all_periods = self.env['hr.employee.period'].search([
             ('employee_id', '=', self.jack.id)
@@ -211,12 +211,12 @@ class TestPeriod(SavepointCase):
             ('end_date', '<=', start_date)
         ], order='end_date desc', limit=1)
 
-    def create_period(self, start_date, end_date, employee_id, continuous_cap, balance, initial_balance, lost):
+    def create_period(self, start_date, end_date, employee_id, continuous_cap, balance, previous_period, lost):
         self.env['hr.employee.period'].create({
             'start_date': start_date,
             'end_date': end_date,
             'balance': balance,
-            'previous_balance': initial_balance,
+            'previous_period': previous_period,
             'lost': lost,
             'employee_id': employee_id,
             'continuous_cap': continuous_cap,

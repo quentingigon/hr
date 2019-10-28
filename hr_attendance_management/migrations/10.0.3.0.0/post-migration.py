@@ -13,7 +13,6 @@ from openupgradelib import openupgrade
 from datetime import date
 
 
-# TODO this migration should work but if made in year 2020, it will not create a period for the year 2019
 @openupgrade.migrate(use_env=True)
 def migrate(env, version):
     if not version:
@@ -35,15 +34,6 @@ def migrate(env, version):
         ], limit=1)
 
         if employee_model:
-            # Create attendance_day for today
-            # date_from = str(date.today())
-            # date_to = str(date.today())
-            # env['create.hr.attendance.day'].create({
-            #     'date_from': date_from,
-            #     'date_to': date_to,
-            #     'employee_ids': [(4, employee["id"]), ]
-            # }).create_attendance_day()
-
             # Get old balance value
             cr.execute(
                 """

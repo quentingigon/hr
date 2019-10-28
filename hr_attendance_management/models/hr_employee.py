@@ -25,9 +25,8 @@ class HrEmployee(models.Model):
 
     attendance_days_ids = fields.One2many('hr.attendance.day', 'employee_id',
                                           "Attendance days")
-    balance = fields.Float(string='Balance', compute='compute_balance',
-                           store=False)
-    initial_balance = fields.Float(string='Initial Balance')
+    balance = fields.Float('Balance', compute='compute_balance', store=True)
+    initial_balance = fields.Float('Initial Balance')
 
     extra_hours_lost = fields.Float()
 
@@ -91,6 +90,7 @@ class HrEmployee(models.Model):
                 employee.period_ids[0].update_period()
 
     @api.multi
+    @api.depends('initial_balance')
     def compute_balance(self, store=False):
         """
         Method used to compute balance we needed. It uses the history of the employee to avoid
@@ -116,7 +116,7 @@ class HrEmployee(models.Model):
                 # If there is an history for this employee, take values of last period
                 if start_date < datetime.datetime.strptime(end_date, '%Y-%m-%d'):
                     balance = employee_history_sorted[-1].final_balance
-                # If last period goes to today
+                # If last period goes to today.
                 elif start_date == datetime.datetime.strptime(end_date, '%Y-%m-%d'):
                     final_balance = employee_history_sorted[-1].final_balance
                 # If the period goes to today, recompute from 01.01.2018
@@ -125,10 +125,19 @@ class HrEmployee(models.Model):
 
             extra = None
             lost = None
-            # If final_balance is not None, it means that there is a period with end_date == today
-            # so we just assign the value
-            if final_balance:
+            if final_balance and not employee.extra_hours_continuous_cap:
                 employee.balance = final_balance
+                employee.extra_hours_lost = 0
+            # If final_balance is not None, it means that there is a period with end_date == today
+            # so we just assign the value. The cap is taken in consideration here.
+            elif final_balance:
+                max_extra_hours = self.env['base.config.settings'].create({}) \
+                    .get_max_extra_hours()
+                bal = min(max_extra_hours, final_balance)
+                employee.balance = bal
+                # if we capped the hours
+                if bal == max_extra_hours:
+                    employee.extra_hours_lost = final_balance - max_extra_hours
             else:
                 extra, lost = employee.past_balance_computation(
                     start_date=start_date,
@@ -139,15 +148,16 @@ class HrEmployee(models.Model):
                 employee.extra_hours_lost = lost
 
             if store:
-                previous_period = None
+                previous_period_id = None
                 if employee_history:
                     previous_period = sorted(employee_history, key=lambda r: r.end_date)[-1]
+                    previous_period_id = previous_period.id
 
                 self.create_period(employee.id,
                                    start_date,
                                    end_date,
                                    extra,
-                                   previous_period.id,
+                                   previous_period_id,
                                    lost,
                                    employee.extra_hours_continuous_cap)
 
@@ -401,10 +411,3 @@ class HrEmployee(models.Model):
             'domain': [('employee_id', '=', self.id)],
             'target': 'current',
         }
-
-    def get_total_balance(self):
-        """
-        Called by a button. Calculate current balance for employee
-        """
-        self.ensure_one()
-        self.compute_balance()

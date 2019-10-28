@@ -68,12 +68,6 @@ class HrAttendance(models.Model):
         new_record.attendance_day_id = att_day
         new_record.working_schedule_id = att_day.working_schedule_id
         att_day.compute_breaks()
-        # start_previous_period = self.env['res.config.settings'].create({})\
-        #     .get_penultimate_balance_cron_execution()
-        # if att_day.date < start_previous_period:
-        #     raise UserError(_('Data change too far back in the past. Please '
-        #                       'only modify attendance after %s'
-        #                       % start_previous_period))
         return new_record
 
     @api.multi
@@ -97,14 +91,6 @@ class HrAttendance(models.Model):
 
         res = super().write(vals)
         att_day_updated._find_related_day()
-
-        # start_previous_period = self.env['res.config.settings'].create({}) \
-        #     .get_penultimate_balance_cron_execution()
-        # if att_day_updated.date \
-        #         and att_day_updated.date < start_previous_period:
-        #     raise UserError(_('Data change too far back in the past. Please'
-        #                       'only modify attendance after %s'
-        #                       % start_previous_period))
         return res
 
     def _find_related_day(self):
