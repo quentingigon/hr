@@ -67,14 +67,9 @@ class HrEmployee(models.Model):
                 employee.current_period_start_date = \
                     fields.Date.from_string(previous_period.end_date)
             else:
-<<<<<<< HEAD
                 config = self.env['res.config.settings'].create({})
-                employee.current_period_start_date = config.get_beginning_date_for_balance_computation()
-=======
-                config = self.env['base.config.settings'].create({})
                 employee.current_period_start_date = \
                     config.get_beginning_date_for_balance_computation()
->>>>>>> 9de4e388e8645e24b5bde90fedd4f313c2aa15dc
 
     @api.multi
     def _compute_work_location(self):
@@ -104,14 +99,7 @@ class HrEmployee(models.Model):
         :param store: create a new period from the last one to current day and store it if True
         """
         for employee in self:
-<<<<<<< HEAD
-            employee_history = self.env['hr.employee.period'].search([
-                ('employee_id', '=', employee.id)
-            ])
             config = self.env['res.config.settings'].create({})
-=======
-            config = self.env['base.config.settings'].create({})
->>>>>>> 9de4e388e8645e24b5bde90fedd4f313c2aa15dc
             config.set_beginning_date()
             # Compute from 01.01.2018 as default
             balance = employee.initial_balance
@@ -143,7 +131,7 @@ class HrEmployee(models.Model):
             # it means there is a period with end_date == today
             # so we just assign the value. The cap is taken in consideration here.
             elif final_balance:
-                max_extra_hours = self.env['base.config.settings'].create({}) \
+                max_extra_hours = self.env['res.config.settings'].create({}) \
                     .get_max_extra_hours()
                 bal = min(max_extra_hours, final_balance)
                 employee.balance = bal
@@ -383,17 +371,6 @@ class HrEmployee(models.Model):
         self.ensure_one()
 
         today = fields.Date.today()
-<<<<<<< HEAD
-        today_attendance_day = self.env['hr.attendance.day'].search([
-            ('employee_id', '=', self.id),
-            ('date', '=', today)
-        ], limit=1)
-
-        worked_hours = 0
-        if today_attendance_day:
-            worked_hours = today_attendance_day.total_attendance
-
-=======
         attendances_today = self.env['hr.attendance'].search([
             ('employee_id', '=', self.id),
             ('check_in', '>=', today)
@@ -407,22 +384,7 @@ class HrEmployee(models.Model):
                 delta = datetime.datetime.now() - \
                         fields.Datetime.from_string(attendance.check_in)
                 worked_hours += delta.total_seconds() / 3600.0
->>>>>>> 9de4e388e8645e24b5bde90fedd4f313c2aa15dc
         return worked_hours
-
-        # attendances_today = self.env['hr.attendance'].search([
-        #     ('employee_id', '=', self.id), ('check_in', '>=', today)])
-        # worked_hours = 0
-        #
-        # for attendance in attendances_today:
-        #     if attendance.check_out:
-        #         worked_hours += attendance.worked_hours
-        #     else:
-        #         delta = datetime.datetime.now() \
-        #                 - fields.Datetime.from_string(attendance.check_in)
-        #         worked_hours += delta.total_seconds() // 3600.0
-        #
-        # return worked_hours
 
     def open_balance_graph(self):
         """
