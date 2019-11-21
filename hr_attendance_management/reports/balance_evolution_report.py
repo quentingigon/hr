@@ -40,7 +40,6 @@ class BalanceEvolutionReport(models.TransientModel):
             balance = last_history_entry.balance
         else:
             config = self.env['base.config.settings'].create({})
-            config.set_beginning_date()
             start_date = config.get_beginning_date_for_balance_computation()
             balance = employee.initial_balance
 
