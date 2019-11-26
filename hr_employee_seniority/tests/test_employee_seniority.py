@@ -121,8 +121,8 @@ class TestHrEmployeeSeniority(common.TransactionCase):
             {
                 'employee_id': self.employee.id,
                 'name': 'Contract 1',
-                'date_start': (2017, 01, 01),
-                'date_end': (2017, 01, 03),
+                'date_start': (2017, 1, 1),
+                'date_end': (2017, 1, 3),
                 'wage': 5000
             }
         )
@@ -132,7 +132,7 @@ class TestHrEmployeeSeniority(common.TransactionCase):
             {
                 'employee_id': self.employee.id,
                 'name': 'Contract 1',
-                'date_start': (2016, 11, 01),
+                'date_start': (2016, 11, 1),
                 'date_end': (2016, 12, 31),
                 'wage': 5000
             }

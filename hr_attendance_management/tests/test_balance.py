@@ -55,7 +55,7 @@ class TestAnnualBalance(SavepointCase):
         stop_01 = date.strftime('%Y-%m-%d 12:00:00')
         # 4h in the morning
         start_02 = date.strftime('%Y-%m-%d 12:30:00')
-        stop_hour_2 = "{}:30".format(16 + hours)
+        stop_hour_2 = f"{16 + hours}:30"
         stop_02 = date.strftime('%Y-%m-%d ' + stop_hour_2)
         # 4h in the afternoon
         self.env['hr.attendance'].create({
