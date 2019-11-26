@@ -16,15 +16,15 @@ class HrEmployee(models.Model):
 
     def _regenerate_calendar(self):
         self.ensure_one()
-        if not self.calendar_id or self.calendar_id.active:
-            self.calendar_id = self.env['resource.calendar'].create({
+        if not self.resource_calendar_id or self.resource_calendar_id.active:
+            self.resource_calendar_id = self.env['resource.calendar'].create({
                 'active': False,
                 'name': _(
                     'Auto generated calendar for employee'
                 ) + ' %s' % self.id,
             }).id
         else:
-            self.calendar_id.attendance_ids.unlink()
+            self.resource_calendar_id.attendance_ids.unlink()
         vals_list = []
         for line in self.calendar_ids:
             for calendar_line in line.calendar_id.attendance_ids:
@@ -36,7 +36,7 @@ class HrEmployee(models.Model):
                     'date_from': line.date_start,
                     'date_to': line.date_end,
                 }))
-        self.calendar_id.attendance_ids = vals_list
+        self.resource_calendar_id.attendance_ids = vals_list
 
 
 class HrEmployeeCalendar(models.Model):

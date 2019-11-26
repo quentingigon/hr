@@ -7,7 +7,7 @@
         <field name="hour_from">08</field>
         <field name="hour_to">12</field>
         <field name="due_hours">4</field>
-        <field name="calendar_id" ref="resource.timesheet_group1"/>
+        <field name="calendar_id" ref="resource.resource_calendar_std"/>
     </record>
     <record model="resource.calendar.attendance" id="resource.calendar_attendance_mon2">
         <field name="name">Monday afternoon</field>
@@ -15,7 +15,7 @@
         <field name="hour_from">13</field>
         <field name="hour_to">17</field>
         <field name="due_hours">4</field>
-        <field name="calendar_id" ref="resource.timesheet_group1"/>
+        <field name="calendar_id" ref="resource.resource_calendar_std"/>
     </record>
     <record model="resource.calendar.attendance" id="resource.calendar_attendance_tue1">
         <field name="name">Tuesday morning</field>
@@ -23,7 +23,7 @@
         <field name="hour_from">08</field>
         <field name="hour_to">12</field>
         <field name="due_hours">4</field>
-        <field name="calendar_id" ref="resource.timesheet_group1"/>
+        <field name="calendar_id" ref="resource.resource_calendar_std"/>
     </record>
     <record model="resource.calendar.attendance" id="resource.calendar_attendance_tue2">
         <field name="name">Tuesday afternoon</field>
@@ -31,7 +31,7 @@
         <field name="hour_from">13</field>
         <field name="hour_to">17</field>
         <field name="due_hours">4</field>
-        <field name="calendar_id" ref="resource.timesheet_group1"/>
+        <field name="calendar_id" ref="resource.resource_calendar_std"/>
     </record>
     <record model="resource.calendar.attendance" id="resource.calendar_attendance_wed1">
         <field name="name">Wednesday morning</field>
@@ -39,7 +39,7 @@
         <field name="hour_from">08</field>
         <field name="hour_to">12</field>
         <field name="due_hours">4</field>
-        <field name="calendar_id" ref="resource.timesheet_group1"/>
+        <field name="calendar_id" ref="resource.resource_calendar_std"/>
     </record>
     <record model="resource.calendar.attendance" id="resource.calendar_attendance_wed2">
         <field name="name">Wednesday afternoon</field>
@@ -47,7 +47,7 @@
         <field name="hour_from">13</field>
         <field name="hour_to">17</field>
         <field name="due_hours">4</field>
-        <field name="calendar_id" ref="resource.timesheet_group1"/>
+        <field name="calendar_id" ref="resource.resource_calendar_std"/>
     </record>
     <record model="resource.calendar.attendance" id="resource.calendar_attendance_thu1">
         <field name="name">Thursday morning</field>
@@ -55,7 +55,7 @@
         <field name="hour_from">08</field>
         <field name="hour_to">12</field>
         <field name="due_hours">4</field>
-        <field name="calendar_id" ref="resource.timesheet_group1"/>
+        <field name="calendar_id" ref="resource.resource_calendar_std"/>
     </record>
     <record model="resource.calendar.attendance" id="resource.calendar_attendance_thu2">
         <field name="name">Thursday afternoon</field>
@@ -63,7 +63,7 @@
         <field name="hour_to">17</field>
         <field name="dayofweek">3</field>
         <field name="due_hours">4</field>
-        <field name="calendar_id" ref="resource.timesheet_group1"/>
+        <field name="calendar_id" ref="resource.resource_calendar_std"/>
     </record>
     <record model="resource.calendar.attendance" id="resource.calendar_attendance_fri1">
         <field name="name">Friday morning</field>
@@ -71,7 +71,7 @@
         <field name="hour_from">08</field>
         <field name="hour_to">12</field>
         <field name="due_hours">4</field>
-        <field name="calendar_id" ref="resource.timesheet_group1"/>
+        <field name="calendar_id" ref="resource.resource_calendar_std"/>
     </record>
     <record model="resource.calendar.attendance" id="resource.calendar_attendance_fri2">
         <field name="name">Friday afternoon</field>
@@ -79,6 +79,6 @@
         <field name="hour_from">13</field>
         <field name="hour_to">17</field>
         <field name="due_hours">4</field>
-        <field name="calendar_id" ref="resource.timesheet_group1"/>
+        <field name="calendar_id" ref="resource.resource_calendar_std"/>
     </record>
 </odoo>

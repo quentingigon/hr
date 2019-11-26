@@ -114,8 +114,10 @@ class HrAttendanceDay(models.Model):
                     ('date_end', '>=', att_day.date)
                 ], order='date_start desc', limit=1)
                 # ...or take the resource.calendar of employee
-                schedule = contracts.working_hours or (
-                    att_day.employee_id.calendar_id)
+
+                calendar_id = att_day.employee_id.calendar_ids[0].calendar_id
+
+                schedule = contracts.resource_calendar_id or calendar_id
 
             att_day.working_schedule_id = schedule
 
@@ -145,7 +147,7 @@ class HrAttendanceDay(models.Model):
                 r.date_from <= att_day.date <= r.date_to)
 
             # Period with only date_to or date_from
-            if not att_schedule:
+            if att_schedule:
                 att_schedule = current_cal_att.filtered(
                     lambda r:
                     (r.date_from <= att_day.date and not r.date_to and r.date_from) or
@@ -544,10 +546,10 @@ class HrAttendanceDay(models.Model):
 
             att_ids = att_day.attendance_ids
             iter_att = iter(att_ids.sorted(key=lambda r: r.check_in))
-            previous_att = iter_att.next()
+            previous_att = iter_att.__next__()
             while True:
                 try:
-                    attendance = iter_att.next()
+                    attendance = iter_att.__next__()
                     self.env['hr.attendance.break'].create(
                         {
                             'employee_id': att_day.employee_id.id,

@@ -101,7 +101,7 @@ class HrEmployee(models.Model):
         store it if True
         """
         for employee in self:
-            config = self.env['base.config.settings'].create({})
+            config = self.env['res.config.settings'].create({})
             balance = employee.initial_balance
             start_date = config.get_beginning_date_for_balance_computation()
             end_date = fields.Date.today()
@@ -223,7 +223,7 @@ class HrEmployee(models.Model):
             .get_max_extra_hours()
         if not start_date:
             start_date = fields.Date.to_string(
-                fields.Date.today().replace(month=1, day=1))
+                datetime.datetime.now().replace(month=1, day=1))
         if not end_date:
             end_date = \
                 fields.Date.to_string(

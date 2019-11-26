@@ -115,7 +115,7 @@ class HrPublicHolidays(models.Model):
         :param employee_id: ID of the employee
         :return: bool
         """
-        if isinstance(selected_date, basestring):
+        if isinstance(selected_date, str):
             selected_date = fields.Date.from_string(selected_date)
         holidays_lines = self.get_holidays_list(
             selected_date.year, employee_id=employee_id)

@@ -21,9 +21,9 @@ class TestAttendanceDays(SavepointCase):
         cls.michael = cls.env.ref('hr.employee_niv')
 
         # Add work schedule (8h/work days) for Gilles, Jack and Michael
-        cls.gilles.calendar_id = cls.env.ref('resource.timesheet_group1')
-        cls.jack.calendar_id = cls.env.ref('resource.timesheet_group1')
-        cls.michael.calendar_id = cls.env.ref('resource.timesheet_group1')
+        cls.gilles.calendar_id = cls.env.ref('resource.resource_calendar_std')
+        cls.jack.calendar_id = cls.env.ref('resource.resource_calendar_std')
+        cls.michael.calendar_id = cls.env.ref('resource.resource_calendar_std')
 
         cls.config = cls.env['res.config.settings'].create({
             'free_break': 0.25,

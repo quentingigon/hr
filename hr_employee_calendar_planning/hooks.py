@@ -14,7 +14,7 @@ def post_init_hook(cr, registry, employees=None):
         env = api.Environment(cr, SUPERUSER_ID, {})
         if not employees:
             employees = env['hr.employee'].search([])
-        calendars = employees.mapped('calendar_id')
+        calendars = employees.mapped('resource_calendar_id')
         calendar_obj = env['resource.calendar']
         line_obj = env['resource.calendar.attendance']
         groups = line_obj.read_group(
@@ -51,7 +51,7 @@ def post_init_hook(cr, registry, employees=None):
             )
         for employee in employees:
             calendar_lines = []
-            for data in calendar_mapping[employee.calendar_id]:
+            for data in calendar_mapping[employee.resource_calendar_id]:
                 calendar_lines.append((0, 0, {
                     'date_start': data[0],
                     'date_end': data[1],
