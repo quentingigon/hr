@@ -32,14 +32,12 @@ class BalanceEvolutionReport(models.TransientModel):
 
         if last_history_entry:
             # One day after last period
-            start_date = (
-                    datetime.datetime.strptime(
-                        last_history_entry.end_date, '%Y-%m-%d') +
-                    datetime.timedelta(days=1)).strftime('%Y-%m-%d')
+            end_date = datetime.datetime.strptime(
+                last_history_entry.end_date, '%Y-%m-%d')
+            start_date = (end_date + datetime.timedelta(days=1)).strftime('%Y-%m-%d')
             balance = last_history_entry.balance
         else:
-            config = self.env['res.config.settings'].create({})
-            config.set_beginning_date()
+            config = self.env['base.config.settings'].create({})
             start_date = config.get_beginning_date_for_balance_computation()
             balance = employee.initial_balance
 
