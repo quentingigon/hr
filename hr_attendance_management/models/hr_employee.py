@@ -225,7 +225,7 @@ class HrEmployee(models.Model):
             .get_max_extra_hours()
         if not start_date:
             start_date = fields.Date.to_string(
-                fields.Date.today().replace(month=1, day=1))
+                datetime.datetime.now().replace(month=1, day=1))
         if not end_date:
             end_date = \
                 fields.Date.to_string(
